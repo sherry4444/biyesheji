@@ -33,6 +33,20 @@ var hostUrl=window.location.protocol+"//"+window.location.host+"/";
 			qualifyContent=typeof(qualifyContent) !="undefined"? qualifyContent:'';
 			window.location.href=hostUrl+url+"?currentPage="+currentPage+"&qualifyContent="+qualifyContent+"&pageNumber="+this.value;
 		});
-	});
+
+
+        //caches a jQuery object containing the header element
+        var header = $(".navigation");
+        $(window).scroll(function() {
+            var scroll = $(window).scrollTop();
+
+            if (scroll >= 500) {
+                header.removeClass('navigation').addClass("scrollNavigation");
+            } else {
+                header.removeClass("scrollNavigation").addClass('navigation');
+            }
+        });
+
+    });
 
 })(jQuery);

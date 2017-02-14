@@ -1,74 +1,256 @@
-body,html
-{
-	padding: 0!important;
-	margin: 0!important;
-	background-color: #f5f5f5;
-}
-.navbar-brand img
-{
-	width: 100px;
-	height: 30px;
-	margin-top: 0!important;
-}
-.sidebar-user-metarial
-{
+body,
+html {
 	width: 100%;
-	min-height: 219px;
+	height: 100%;
 }
-.sidebar-user-metarial-content
-{
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-weight: 700;
+}
+
+/**********************************
+NAVIGATION
+***********************************/
+#brand{
+
+	height: 40px;
+	width: 40px;
+}
+
+.navigation{
+	margin: 0px 10px 0px 0px;
+	background: none;
+	border: none;
+}
+
+.scrollNavigation{
+	margin: 0px 10px 0px 0px;
+	background: #333333;
+	border: none;
+	width: 100%;
+}
+
+.navbar-default {
+	background-color: transparent !important;
+	border-color: transparent !important;
+}
+#crunch{
+	color: white;
+}
+
+#menuText{
+	font-weight: 100;
+	font-size: 20px;
+	color: white;
+	padding: 10px 30px 10px 0px;
+}
+
+#navButton{
+	font-weight: 100;
+	font-size: 20px;
+	border: none;
+	padding: 10px 15px 15px 10px;
+	border-radius:0%;
+	color: white;
+	background: #02E0C6;
+}
+
+#navButton:hover{
+	font-weight: 100;
+	font-size: 20px;
+	background: #61DFD1;
+	border: none;
+	padding: 10px 15px 15px 10px;
+	border-radius:2%;
+	color: white;
+}
+
+
+/************/
+
+p{
+
+	color: white;
+
+
+}
+
+
+.intro-header {
+	padding-top: 50px;
+	padding-bottom: 50px;
 	text-align: center;
+	color: #f8f8f8;
+	background:linear-gradient(
+			rgba(60, 199, 187, 0.70),
+			rgba(51, 163, 189, 0.80)
+	),  url("/uploads/161101/money-card-business-large.jpeg");
+	background-size: cover;
+
 }
-.legitRipple img
-{
-	margin: 0 auto;
+
+.intro-message {
+	position: relative;
+	padding-top: 15%;
+	padding-bottom: 20%;
 }
-.dropdown-user
-{
-	max-height: 46px;
-	max-width: 180px;
+
+.intro-message > h1 {
+	margin-top: -500;
+	font-size: 3em;
+	font-weight: 200;
+
 }
-.navbar-inverse
-{
-	margin-bottom: 0;
+
+@media(max-width:767px) {
+	.intro-message {
+		padding-bottom: 15%;
+	}
+
+	.intro-message > h1 {
+		font-size: 3em;
+	}
+
+	ul.intro-social-buttons > li {
+		display: block;
+		margin-bottom: 20px;
+		padding: 0;
+	}
+
+	ul.intro-social-buttons > li:last-child {
+		margin-bottom: 0;
+	}
+
 }
-a:hover
-{
-	text-decoration: none;
+
+#button{
+	margin-top: 30px;
+	background: #02E0C6;
+	border: none;
+	border-radius: 0%;
+	padding: 15px 15px 15px 15px;
+
 }
-.visible-xs-block
-{
-	float: right!important;
+
+#button-white{
+	margin-top: 30px;
+	background: white;
+	color: #02E0C6;
+	border: none;
+	border-radius: 0%;
+	padding: 15px 15px 15px 15px;
+
 }
-.visible-xs-block li
-{
+
+
+#button:hover{
+	margin-top: 30px;
+	background: #61DFD1;
+	border: none;
+	border-radius: 0%;
+	padding: 15px 15px 15px 15px;
+
+}
+
+.network-name {
+	text-transform: uppercase;
+	font-size: 17px;
+	font-weight: 500;
+	font-family: 'lato';
+	letter-spacing: 2px;
+}
+
+.content-section-a {
+	padding: 80px 0;
+	background: #FCFBF9;
+}
+
+.content-section-b {
+	padding: 50px 0;
+	background-color: white;
+
+}
+
+.content-section-c {
+	padding: 80px 0;
+	background: #FCFBF9;
+}
+
+.content-section-d {
+	padding: 50px 0;
+	background-color: #02E0C6;
+
+}
+
+.phone{
+
+	height: 400px;
+	width: 409px;
 	float: left;
 }
-.form-group
-{
-	min-height: 36px;
+
+.lead {
+	font-size: 26px;
+	font-weight: 400;
+	color: #333333;
 }
-.text-size-small
-{
-	width: 100%;
-	display: block;
+.lead-white {
+	font-size: 26px;
+	font-weight: 400;
+	color: white;
 }
-.sidebar-user-metarial-content
-{
-	text-overflow: ellipsis;
-	overflow: hidden;
-	word-wrap: normal;
+
+.section-heading {
+	margin-bottom: 10px;
+	color: #333333;
+
 }
-.user_nav span
-{
-	text-overflow: ellipsis;
-	overflow: hidden;
-	word-wrap: normal;
-	width: 90px!important;
-	height: 25px!important;
-	display: block;
+
+.section-heading-white {
+	margin-bottom: 10px;
+	color: white;
+
 }
-.navbar-brand
-{
-	padding-top: 6px;
+
+.section-heading-spacer {
+	float: left;
+	width: 100px;
+	border-top: 3px solid #02E0C6;
+}
+
+.section-heading-spacer-white {
+	float: left;
+	width: 100px;
+	border-top: 3px solid #ffffff;
+}
+
+#responsive{
+
+	float: right;
+
+}
+
+@media(max-width:1199px) {
+
+}
+
+@media(max-width:767px) {
+
+}
+
+
+footer {
+	padding: 50px 0;
+	background-color: #f8f8f8;
+}
+
+p.copyright {
+	margin: 15px 0 0;
 }

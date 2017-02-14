@@ -16,6 +16,16 @@ public class SigninController {
         return "signin/login";
     }
 
+    @RequestMapping(value = "/login")
+    public String login() {
+        return "home/home";
+    }
+
+    @RequestMapping(value = "/home")
+    public String homefirst() {
+        return "home/home";
+    }
+
     @RequestMapping(value = "verification")
     public void Verification(HttpServletResponse httpResponse, HttpSession httpSession)
     {
