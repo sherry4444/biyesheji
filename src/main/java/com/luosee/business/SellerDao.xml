@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.luosee.business.SellerDao">
+    <resultMap id="tb_seller" type="com.luosee.business.Seller">
+        <id column="sellerId" property="sellerId"></id>
+        <result column="sellerName" property="sellerName"></result>
+        <result column="sellerLogo" property="sellerLogo"></result>
+        <result column="certificationStatus" property="certificationStatus"></result>
+        <collection property="businessSubUser" column="subUserId" resultMap="business_user"></collection>
+    </resultMap>
+
+    <resultMap id="business_user" type="com.luosee.business.BusinessSubUser">
+        <id column="subUserId" property="subUserId"></id>
+        <id column="bu_businessUserID" property="businessUserID"></id>
+    </resultMap>
+
+    <sql id="seller_col">sellerId,sellerName,sellerLogo,subUserId,certificationStatus</sql>
+
+    <insert id="addSeller" parameterType="com.luosee.business.Seller">
+        INSERT INTO tb_seller(sellerName,sellerLogo,businessInfoId,visual,submitTime,powerAttorney,trademark) VALUES(#{sellerName},#{sellerLogo},#{businessInfoId},#{visual},now(),#{powerAttorney},#{trademark})
+    </insert>
+
+    <delete id="deleteSeller" parameterType="int">
+        DELETE FROM tb_seller where sellerId=#{id}
+    </delete>
+
+    <update id="updateBrand" parameterType="com.luosee.business.Seller">
+        UPDATE tb_seller SET
+        sellerName=#{sellerName},
+        sellerLogo=#{sellerLogo}
+         where sellerId=#{sellerId}
+    </update>
+
+    <select id="queryBrand" resultType="com.luosee.business.Seller" parameterType="int">
+        SELECT sellerLogo,powerAttorney,trademark FROM tb_seller where sellerId=#{id}
+    </select>
+
+    <select id="sellerCount" resultType="java.lang.Integer" parameterType="com.luosee.po.Page">
+        SELECT COUNT(sellerId)
+        FROM tb_seller as s
+        INNER JOIN tb_business_sub_user as bsu ON s.businessInfoId=bsu.businessUserID and bsu.subUsername=#{querytool}
+    </select>
+
+    <select id="findSellerByName" resultMap="tb_seller" parameterType="com.luosee.po.Page">
+        SELECT <include refid="seller_col"></include>
+        FROM tb_seller as s
+        INNER JOIN tb_business_sub_user as bsu ON s.businessInfoId=bsu.businessUserID and bsu.subUsername=#{querytool}
+        ORDER BY sellerId DESC
+        limit #{dbIndex},#{dbNumber}
+    </select>
+
+</mapper>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <div th:replace="fragments/resourceLink :: resourceLink"></div>
+    <link rel="stylesheet" th:href="@{/resources/css/userPay.css}" />
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+<div class="pay-body">
+    <div class="pay-info">
+        <div th:text="${status}"></div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div class="sidebar sidebar-main" th:fragment="userLeftItem">
+					<div class="sidebar-content">
+						<div class="sidebar-user-metarial">
+							<div class="category-content">
+								<div class="sidebar-user-metarial-content">
+									<a href="#" class="legitRipple">
+										<img class="img-circle img-responsive" th:src="@{/resources/images/user.png}" />
+									</a>
+									<div>
+										<h6 th:text="${#authentication.Principal.nickname != '' ? #authentication.Principal.nickname :#authentication.getName()}"></h6>
+										<div  th:if="${session.userPay !=null }" th:each="pay,index:${session.userPay}" th:object="${pay}">
+											<div th:if="*{#dates.createNow().getTime() <= validityDate.getTime()}">
+												<span class="text-size-small" th:text="*{payType == 0 ? validityDate != null ? '年费':'当前没有年费':validityDate != null ?'月费':'当前没有月费'}"></span>
+												<span class="text-size-small" th:if="*{validityDate != null}" th:text="|有效期*{validityDate}|"></span>
+											</div>
+											<div th:if="*{#dates.createNow().getTime() > validityDate.getTime()}">
+												<span class="text-size-small">你好商家你的年费已过期<a th:href="@{/subscribe}">现在付费</a></span>
+											</div>
+										</div>
+
+									</div>
+								</div>
+								<div class="sidebar-user-material-menu">
+									<a href="#user-nav" data-toggle="collapse" class="legitRipple"><span>我的帐户</span> <i class="caret"></i></a>
+								</div>
+							</div>
+							<div class="navigation-wrapper collapse" id="user-nav" aria-expanded="true">
+								<ul class="navigation">
+									<li><a href="#" th:if="${session.Update != null}" class="legitRipple"><i class="icon-user-plus"></i> <span>我的余额</span></a></li>
+									<li><a th:href="@{/qualifyUserInfo}" class="legitRipple"><i class="icon-coins"></i> <span>我的信息</span></a></li>
+									<li><a href="#" th:if="${session.Update != null}" class="legitRipple"><i class="icon-cog5"></i> <span>充值/提现</span></a></li>
+									<li><a href="/logout" th:href="@{#}" onclick="$('#form').submit();"><i class="icon-switch2"></i> <span>登出</span></a>
+										<form style="visibility: hidden" id="form" method="post" action="#" th:action="@{/logout}"></form></li>
+								</ul>
+							</div>
+						</div>
+						
+						<div class="sidebar-category sidebar-category-visible">
+							<div class="category-content no-padding">
+								<ul class="navigation">
+									<li class="active">
+										<a href="#" class="has-ul legitRipple">
+											<i class="icon-user"></i>
+											<span>账户管理</span>
+										</a>
+										<ul class="hidden-ul" style="display: block">
+											<li>
+												<a th:href="@{/}" class="legitRipple">用户首页</a>
+											</li>
+											<li>
+												<a th:href="@{/qualifyUserInfo}" class="legitRipple">我的账号</a>
+											</li>
+											<li th:if="${#authentication.Principal.grade != '3'}">
+												<a th:href="@{/modifyPassword}" class="legitRipple">重设密码</a>
+											</li>
+											<li  sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_ADMIN','ROLE_DECORATION')" th:if="${#authentication.Principal.grade != '3'}">
+												<a th:href="@{/qualifyCertification}" class="legitRipple">认证审核</a>
+											</li>
+											<li sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_ADMIN','ROLE_DECORATION')" th:if="${#authentication.Principal.grade != '3' && #authentication.Principal.certificationStatus == '认证成功'}">
+												<a th:href="@{/queryChildUser}" class="legitRipple">设置子账号</a>
+											</li>
+										</ul>
+									</li>
+									<li  class="active" sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_ADMIN','ROLE_DECORATION')" th:if="${#authentication.Principal.grade != '3' && #authentication.Principal.certificationStatus == '认证成功'}">
+										<a href="#" class="has-ul legitRipple">
+											<i class="icon-paperplane"></i>
+											<span>品牌管理</span>
+										</a>
+										<ul class="hidden-ul"  style="display: block">
+											<li>
+												<a th:href="@{/qualifyBrand}" class="legitRipple">品牌列表</a>
+											</li>
+										</ul>
+									</li>
+									<li class="active">
+										<a href="#" class="has-ul legitRipple">
+											<i class="icon-newspaper2"></i>
+											<span>方案管理</span>
+										</a>
+										<ul class="hidden-ul"  style="display: block">
+											<li>
+												<a th:href="@{/qualifyPlan}" class="legitRipple">方案列表</a>
+											</li>
+											<li>
+												<a th:href="@{/managementTag}" class="legitRipple">标签管理</a>
+											</li>
+											<li th:if="${session.Update != null}">
+												<a th:href="@{/choiceCad}" class="legitRipple">cad导入</a>
+											</li>
+										</ul>
+									</li>
+									<li class="active" sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_ADMIN','ROLE_DECORATION')" th:if="${#authentication.Principal.grade != '3' && #authentication.Principal.certificationStatus == '认证成功'}">
+										<a href="#" class="has-ul legitRipple">
+											<i class="icon-store2"></i>
+											<span>商品管理</span>
+										</a>
+										<ul class="hidden-ul" style="display: block">
+											<li>
+												<a th:href="@{/qualifyProduct}" class="legitRipple">商品列表</a>
+											</li>
+											<li>
+												<a th:href="@{/qualifyModel}" class="legitRipple">模型列表</a>
+											</li>
+											<li>
+												<a th:href="@{/addModel}" class="legitRipple">制作模型</a>
+											</li>
+										</ul>
+									</li>
+									<li class="active" th:if="${session.Update != null}">
+										<a href="#" class="has-ul legitRipple">
+											<i class="icon-circles2"></i>
+											<span>推荐位展示</span>
+										</a>
+										<ul class="hidden-ul"  style="display: block">
+											<li>
+												<a href="#" class="legitRipple">推荐位设置</a>
+											</li>
+											<li>
+												<a href="#" class="legitRipple">统计</a>
+											</li>
+										</ul>
+									</li>
+									<li class="active" th:if="${session.Update != null}">
+										<a href="#" class="has-ul legitRipple">
+											<i class="icon-coin-yen"></i>
+											<span>财务</span>
+										</a>
+										<ul class="hidden-ul" style="display: block">
+											<li>
+												<a href="#" class="legitRipple">我的余额</a>
+											</li>
+											<li>
+												<a href="#" class="legitRipple">充值/提现</a>
+											</li>											
+											<li>
+												<a href="#" class="legitRipple">发票</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+	</body>
+</html>

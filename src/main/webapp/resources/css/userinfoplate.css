@@ -1,0 +1,107 @@
+.form-attr
+{
+	width: 500px;
+	margin-left: 150px;
+	margin-top: 50px;
+}
+.authentication:before
+{
+	content: "\2713";
+	color: green;
+	text-decoration: none;
+}
+.col-sm
+{
+	width: 250px!important;
+	float: left;
+}
+.control-label
+{
+	width: 100px;
+}
+.col-sm-10 span
+{
+	line-height:27px;
+}
+.license-plate
+{
+	width: 500px;
+	height: 150px;
+}
+.license-plate label,.license-btn,.license-plate img,.control-label,.col-sm-10,.form-control
+{
+	float: left!important;
+}
+.license-plate img
+{
+	width: 100px;
+	height: 100px;
+	margin-left: 80px;
+}
+.license-btn
+{
+	width: 100px;
+	height: 100px;
+	margin-left: 50px;
+}
+.license-btn button
+{
+	width: 70px;
+	height: 25px;
+	margin-top: 20px;
+	box-sizing: content-box;
+	background-color: #D0E9C6;
+	border: 1px solid #999999;
+}
+.company-contact
+{
+	width: 500px;
+	height: 150px;
+}
+.certification-status-info
+{
+	width: 300px;
+	height: 150px;
+	margin: 100px;
+}
+.certification-status-info ul
+{
+	list-style-type: none;
+}
+.form-control,.col-sm-10
+{
+	width: 211px!important;
+}
+.user-in
+{
+	width: 180px;
+	height: 27px;
+	box-sizing: border-box;
+	outline: none;
+	border: 1px solid #a9a9a9;
+}
+.user-area
+{
+	float: left;
+	margin-right: 5px;
+}
+.user-img
+{
+	max-width: 200px;
+	max-height: 120px;
+}
+.upload-logo
+{
+	float: left;
+	width: 100px;
+	height: 27px;
+	box-sizing: border-box;
+	border: 1px solid #a9a9a9;
+	outline: none;
+	background-color: #01A29A;
+	color: #ffffff;
+}
+.upload-logo:hover
+{
+	background-color: #4cae4c;
+}

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>窝立方-模型列表</title>
+    <div th:replace="fragments/resourceLink :: resourceLink"></div>
+    <script th:src="@{/resources/js/business_model.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/datatables_basic.js}" ></script>
+    <script type="text/javascript" th:src="@{/resources/js/datatables.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/resources/js/select2.min.js}" ></script>
+    <script th:src="@{/resources/js/uniform.min.js}"></script>
+    <script th:src="@{/resources/js/login.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/plugins/media/fancybox.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/pages/user_pages_team.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/jquery.quick-view.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/modeling.js}"></script>
+    <link rel="stylesheet" th:href="@{/resources/css/product.css}" />
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div class="page-container" style="min-height: 518px;">
+    <div class="page-content">
+        <div th:replace="fragments/left :: userLeftItem">&nbsp;</div>
+        <div class="content-wrapper">
+
+            <div class="page-header page-header-default">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">模型管理</span></h4>
+                        <a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="content">
+                <div class="panel panel-white r-panel-content">
+                    <div class="panel-body">
+                        <div class="navbar-header" style="float: right">
+
+                            <div class="tabbable" >
+                                <ul class="nav nav-tabs nav-tabs-solid nav-tabs-component">
+                                    <li class="dropdown">
+                                        <a data-th-href="@{/addModel}">制作模型</a>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="javascript:void(0);" class="del-model">删除模型</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                        <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper no-footer">
+                            <div class="datatable-header">
+
+                                <form th:action="@{/qualifyModel}" method="post">
+                                    <div id="DataTables_Table_2_filter" class="dataTables_filter">
+                                        <label>
+                                            <span>搜索：</span>
+                                            <input type="search" class="" placeholder="请输入模型名" aria-controls="DataTables_Table_2" name="qualifyContent"/>
+                                            <button type="submit" class="btn btn-default" style="width: 50px;height: 30px;"><i></i></button>
+                                        </label>
+                                    </div>
+                                    <div class="dataTables_length" id="DataTables_Table_2_length">
+                                        <label>
+                                            <span>显示：</span>
+                                            <select id="plan-page-num" th:attr="data-currentPage=${page.currentPage},data-url='qualifyModel',data-querytool=${page.querytool.qualifyContent}"
+                                                    aria-controls="DataTables_Table_2" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>
+                                        </label>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="datatable-scroll">
+                                <table class="table datatable-basic table-hover dataTable no-footer" id="DataTables_Table_2" role="grid" aria-describedby="DataTables_Table_2_info">
+                                    <thead>
+                                    <tr role="row">
+                                        <th tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="First Name: activate to sort column descending">
+                                            <span>图片</span>
+                                        </th>
+                                        <th tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending">
+                                            <span>模型名称</span>
+                                        </th>
+                                        <th>
+                                            <span>创建时间</span>
+                                        </th>
+                                        <th class="field_s" th:class="${page.querytool.queryField.get('time') == 'DESC' ? 'sorting_desc' : 'sorting_asc'}" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Job Title: activate to sort column ascending">
+                                            <a th:href="@{/qualifyModel?(currentPage=${page.currentPage},time=${page.querytool.queryField.get('time') == 'DESC' ? 'ASC' : 'DESC'},status=${page.querytool.queryField.get('status')},style=${page.querytool.queryField.get('style')},type=${page.querytool.queryField.get('type')},qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}">
+                                                <span>最后修改时间</span>
+                                            </a>
+                                        </th>
+                                        <th class="field_s" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="status: activate to sort column ascending">
+                                            <span>状态</span>
+                                            <ul class="q-field">
+                                                <li>
+                                                    <a th:class="${page.querytool.queryField.get('status') == '0' ? 'label label-success' : ''}"
+                                                       th:href="@{/qualifyModel?(currentPage=${page.currentPage},time=${page.querytool.queryField.get('time')},status='0',style=${page.querytool.queryField.get('style')},type=${page.querytool.queryField.get('type')},qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}">
+                                                        等待资料审核
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a th:class="${page.querytool.queryField.get('status') == '1' ? 'label label-success' : ''}"
+                                                       th:href="@{/qualifyModel?(currentPage=${page.currentPage},time=${page.querytool.queryField.get('time')},style=${page.querytool.queryField.get('style')},type=${page.querytool.queryField.get('type')},status='1',qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}">
+                                                        确认制作费
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a th:class="${page.querytool.queryField.get('status') == '2' ? 'label label-success' : ''}"
+                                                       th:href="@{/qualifyModel?(currentPage=${page.currentPage},time=${page.querytool.queryField.get('time')},style=${page.querytool.queryField.get('style')},type=${page.querytool.queryField.get('type')},status='2',qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}">
+                                                        确认制作
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a th:class="${page.querytool.queryField.get('status') == '3' ? 'label label-success' : ''}"
+                                                       th:href="@{/qualifyModel?(currentPage=${page.currentPage},time=${page.querytool.queryField.get('time')},style=${page.querytool.queryField.get('style')},type=${page.querytool.queryField.get('type')},status='3',qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}">
+                                                        等待制作
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a th:class="${page.querytool.queryField.get('status') == '4' ? 'label label-success' : ''}"
+                                                       th:href="@{/qualifyModel?(currentPage=${page.currentPage},time=${page.querytool.queryField.get('time')},style=${page.querytool.queryField.get('style')},type=${page.querytool.queryField.get('type')},status='4',qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}">
+                                                        制作中
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </th>
+                                        <th class="field_s" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">
+                                            <span>风格</span>
+                                            <ul class="q-field">
+                                                <li>
+                                                    <a th:class="${page.querytool.queryField.get('style') == 'all' ? 'label label-success' : ''}"
+                                                       th:href="@{/qualifyModel?(currentPage=${page.currentPage},time=${page.querytool.queryField.get('time')},status=${page.querytool.queryField.get('status')},style='all',type=${page.querytool.queryField.get('type')},qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}">
+                                                        全部
+                                                    </a>
+                                                </li>
+                                                <li data-th-each="style,styleIndex:${styleList}">
+                                                    <a  th:class="${page.querytool.queryField.get('style') ==  style.styleId.toString() ? 'label label-success' : ''}"
+                                                        data-th-text="${style.styleName}" th:href="@{/qualifyModel?(currentPage=${page.currentPage},time=${page.querytool.queryField.get('time')},status=${page.querytool.queryField.get('status')},style=${style.styleId},type=${page.querytool.queryField.get('type')},qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}">
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </th>
+                                        <th class="field_s" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">
+                                            <span>种类</span>
+                                            <ul class="q-field">
+                                                <li>
+                                                    <a th:class="${page.querytool.queryField.get('type') == 'all' ? 'label label-success' : ''}"
+                                                       th:href="@{/qualifyModel?(currentPage=${page.currentPage},time=${page.querytool.queryField.get('time')},status=${page.querytool.queryField.get('status')},style=${page.querytool.queryField.get('style')},type='all',qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}">
+                                                        全部
+                                                    </a>
+                                                </li>
+                                                <li data-th-each="type,typeIndex:${typeList}">
+                                                    <a  th:class="${page.querytool.queryField.get('type') ==  type.typeId.toString() ? 'label label-success' : ''}"
+                                                        data-th-text="${type.typeName}" th:href="@{/qualifyModel?(currentPage=${page.currentPage},time=${page.querytool.queryField.get('time')},status=${page.querytool.queryField.get('status')},style=${page.querytool.queryField.get('style')},type=${type.typeId},qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}">
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </th>
+                                        <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">
+                                            <span>操作</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr role="row" th:each="model,modelIndex:${modelList}" th:class="${modelIndex.index % 2 == 0 ? 'odd':'even'}">
+                                        <td class="sorting_1">
+                                            <!--<a th:href="@{https://cdn-test.dodojia.cn/}+${model.modelImages !=null ? #strings.arraySplit(#strings.arraySplit(model.modelImages,';')[0],',')[1] :''}" data-popup="lightbox">-->
+                                                <!--<img data-th-src="'http://cdn-test.dodojia.cn/'+${model.modelImages !=null ? #strings.arraySplit(#strings.arraySplit(model.modelImages,';')[0],',')[1] :''}+'?x-oss-process=style/product-normal'"/>-->
+                                            <!--</a>-->
+                                            <img src=""
+                                                 class="img-thumbnail btn imgpath "
+                                                 th:imgpath="${model.modelImages}"
+                                                 th:imgurl="${imgurl.IMGPREFIX}"
+                                                 th:imgsufix="${imgurl.IMGSUFIX}"
+                                            />
+                                        </td>
+                                        <td>
+                                            <a th:text="${model.modelName}"></a>
+                                        </td>
+                                        <td>
+                                            <span th:text="${model.createTime}"></span>
+                                        </td>
+                                        <td>
+                                            <span  th:text="${model.lastReviewTime}"></span>
+                                        </td>
+                                        <td>
+                                            <span th:text="${model.status == 0 ? '等待资料审核':model.status==1?'确认制作费':model.status==2?'确认制作':model.status==3?'等待制作':model.status==4?'制作中':''}"></span>
+                                        </td>
+                                        <td>
+                                            <span class="label label-danger" th:if="${model.style!=null}" th:text="${model.style.styleName}"></span>
+                                        </td>
+                                        <td>
+                                            <span th:if="${model.type!=null}" th:text="${model.type.typeName}"></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="styled" name="sub_del" data-th-value="${model.modelId}"/>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="datatable-footer">
+                                <div class="dataTables_info" id="DataTables_Table_2_info" role="status" aria-live="polite">
+                                    <span th:text="${'显示'+(page.dbIndex+1)+'到'+(page.dbIndex+modelList.size())+'的'+modelList.size()+'项'}"></span>
+                                </div>
+                                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_2_paginate">
+                                    <a th:if="${page.currentPage} gt 1" th:class="|paginate_button previous${page.currentPage != 1?'':'disabled'}|" aria-controls="DataTables_Table_2" th:href="@{/qualifyModel?(currentPage=${page.currentPage-1},qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}" data-dt-idx="0" tabindex="0" >
+                                        <span>← </span>
+                                    </a>
+                                    <span>
+                                        <a th:if="${page.currentPage != 1}" th:href="@{/qualifyModel?(currentPage=1,qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}"
+                                           class="paginate_button"  aria-controls="DataTables_Table_2" tabindex="0">
+                                            <span>首页</span>
+                                        </a>
+                                        <a th:each="pageNo : ${#numbers.sequence(page.currentPage - 3 < 0 ? 0 : page.currentPage - 3, page.currentPage + 3 > page.totalPage - 3 ? page.totalPage - 1 : page.currentPage + 3)}"
+                                           th:href="@{/qualifyModel?(currentPage=${pageNo+1},qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}"
+                                           th:class="|paginate_button ${page.currentPage eq (pageNo+1)?'current':''}|" aria-controls="DataTables_Table_2" data-dt-idx="1" tabindex="0">
+                                            <span th:text="${pageNo + 1}"></span>
+                                        </a>
+                                        <a th:if="${page.currentPage != page.totalPage}" th:href="@{/qualifyModel?(currentPage=${page.totalPage},qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}"
+                                           class="paginate_button"  aria-controls="DataTables_Table_2" tabindex="0">
+                                            <span>尾页</span>
+                                        </a>
+                                    </span>
+                                    <a th:if="${page.currentPage} lt ${page.totalPage}" th:href="@{/qualifyModel?(currentPage=${page.nextPage},qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}"
+                                       class="paginate_button next" aria-controls="DataTables_Table_2" data-dt-idx="3" tabindex="0" id="DataTables_Table_2_next">
+                                        <span> →</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    </div>
+    <div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
+</body>
+</html>

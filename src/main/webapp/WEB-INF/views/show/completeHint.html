@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:attr="content=${_csrf.token}"/>
+    <meta name="_csrf_header" th:attr="content=${_csrf.headerName}"/>
+    <title>窝立方-用户注册</title>
+    <link rel="stylesheet" th:href="@{/resources/css/signstyle.css}"/>
+    <div th:replace="fragments/resourceLink :: resourceLink"></div>
+    <script type="text/javascript" th:src="@{/resources/js/sign.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/home.js}" ></script>
+    <link rel="icon" type="image/x-icon" th:href="@{/resources/images/favicon.ico}">
+</head>
+<body>
+<div th:replace="fragments/signHead :: header"></div>
+<div class="page-header page-header-style" th:fragment="alert (${session.message})">
+    <h1 th:text="${session.message}"></h1>
+</div>
+
+<div class="reciprocal">
+    <span>5</span>
+</div>
+
+<div class="toLogin">
+    <button>前往登录</button>
+</div>
+<div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
+<script>
+    ;(function ($) {
+        $(function () {
+            var time=5;
+            var reciprocal=window.setInterval(function () {
+                $(".reciprocal span").html(time);
+                time--;
+                if(time==0)
+                {
+                    window.location.href=hostUrl+"users/login";
+                    window.clearInterval(reciprocal);
+                    reciprocal=null;
+                }
+            },1000);
+        });
+    })(jQuery);
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+.p-plate
+{
+    margin: 0 auto;
+}
+.p-plate
+{
+    width: 1142px;
+    margin-top: 50px;
+    min-height: 768px;
+    overflow: auto;
+}
+.p-facility-plate
+{
+    width: 900px;
+    margin-left: 20px;
+    border: 1px solid #dddddd;
+    min-height: 602px;
+    overflow: auto;
+    float: left;
+}
+.p-facility-plate h1
+{
+    text-indent: 2cm;
+}
+.pl-brand-certification
+{
+    margin-top: 200px;
+    width: 100%;
+    text-align: center;
+    height:40px;
+    margin-bottom: 200px;
+}
+.brand-certification
+{
+    border: 1px solid #9d9d9d;
+    outline: none;
+    margin: 0 auto;
+    width: 130px;
+    height:40px;
+    box-sizing: content-box;
+}
+.p-facility-title h3
+{
+    display: block;
+    -webkit-margin-before: 0.83em;
+    -webkit-margin-after:0.83em;
+    margin-left: 9px;
+    color: #337AB7;
+}
+#pagination
+{
+   margin-left:200px ;
+}

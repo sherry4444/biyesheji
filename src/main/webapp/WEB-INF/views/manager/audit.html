@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sd="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="_csrf" th:attr="content=${_csrf.token}"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>窝立方-资质审核</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../../resources/css/manager.css" rel="stylesheet" media="screen" th:href="@{/resources/css/manager.css}"/>
+    <link href="http://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../../resources/css/pagination.css" rel="stylesheet" media="screen" th:href="@{/resources/css/pagination.css}"/>
+    <div th:replace="fragments/resourceLink :: resourceLink"></div>
+   <!-- <script src="http://code.jquery.com/jquery-latest.js"></script>-->
+    <script src="../../../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery.min.js}"></script>
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+    <script src="../../../resources/js/audit.js" th:src="@{/resources/js/audit.js}"></script>
+    <script src="../../../resources/js/manager.js" th:src="@{/resources/js/manager.js}"></script>
+    <script src="http://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
+
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse" th:replace="fragments/header :: header">
+    heah
+</div>
+
+<!-- Page container -->
+<div class="page-container">
+
+    <!-- Page content -->
+    <div class="page-content">
+
+        <!-- Main sidebar -->
+        <div class="sidebar sidebar-main">
+            <div th:replace="fragments/leftmanager :: leftmanager"></div>
+        </div>
+        <!-- /main sidebar -->
+
+
+        <!-- Main content -->
+        <div class="content-wrapper">
+
+            <!-- Page header -->
+            <div class="page-header page-header-default">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h3 data-th-text="管理员页面"></h3>
+                    </div>
+
+                    <div class="heading-elements">
+                        <div class="heading-btn-group hidden">
+                            <a href="#" class="btn btn-link btn-float has-text"><i
+                                    class="icon-bars-alt text-primary"></i><span>Statistics</span></a>
+                            <a href="#" class="btn btn-link btn-float has-text"><i
+                                    class="icon-calculator text-primary"></i> <span>Invoices</span></a>
+                            <a href="#" class="btn btn-link btn-float has-text"><i
+                                    class="icon-calendar5 text-primary"></i> <span>Schedule</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="breadcrumb-line">
+                    <ul class="breadcrumb" style="float: left;">
+                        <li class="active"><a href="#"><i class="icon-arrow-right8 position-left"></i>资质审核</a></li>
+
+                    </ul>
+
+
+                </div>
+            </div>
+            <!-- /page header -->
+
+
+            <div class="content">
+                <div class="panel">
+                    <div class="panel-heading"></div>
+                    <div class="panel-body">
+                        <div class="middlebody row ">
+                                <div class="pull-right">
+                                    <table class="searchbox1">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <div id="header-wrap" class="header-wrap ">
+                                                    <div class="header-bd" id="look1">
+                                                        <p th:if="${page.totalNumber} != null"
+                                                           th:text="|共${page.totalNumber}条|"></p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="padding-left: 300px">
+                                                <form th:href="@{/audit}" method="post">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="按公司名模糊搜索"
+                                                               name="title" th:value="${title}" th:id="title"/>
+                                                        <input class="hidden" th:value="${flag}" name="flag" id="flag"/>
+                                                        <input class="hidden" th:value="${num}" name="num" id="num"/>
+                                                        <input  class="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-warning"
+                                                                    th:flag="${flag}" th:num="${num}" th:url="audit"
+                                                                    type="submit">搜索</button>
+                                                        </span>
+                                                    </div><!-- /input-group -->
+                                                </form>
+                                            </td>
+                                            <td style="padding-left: 20px">
+                                                <label style="padding-top: 8px;"><span></span>
+                                                    <select class="btn btn-ms btn-default"
+                                                           onchange="numsearch(this,options[selectedIndex].value)"  th:flag="${flag}"
+                                                            style="padding-left: 4px">
+                                                        <option th:text="${num}">选择页数</option>
+                                                        <option value="/audit?num=10">10</option>
+                                                        <option value="/audit?num=50">50</option>
+                                                        <option value="/audit?num=100">100</option>
+                                                        <option value="/audit?num=300">300</option>
+                                                        <option value="/audit?num=600">600</option>
+                                                    </select>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="middlebar col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                                    <div class="righttable col-lg-12 col-xs-12 col-sm-12 col-md-12 " align="center">
+                                        <div class="tabtable">
+                                            <ul class="nav nav-tabs">
+                                                <li th:class="${flag == 1}?'active':''"><a th:href="@{/audit?(flag=1,num=${num})}">未认证</a></li>
+                                                <li th:class="${flag == 2}?'active':''"><a th:href="@{/audit?(flag=2,num=${num})}">已认证</a></li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade " id="tab1" th:class="${flag == 1}?'tab-pane fade in active':'tab-pane fade'">
+                                                    <div class="text-left ">
+                                                        <table class="table table-striped table-hover" id="data">
+                                                            <thead>
+                                                            <tr>
+                                                                <th><a th:href="@{/audit?(flag1=(${flag1} != 2)?2:3,num=${num},flag=${flag})}" class="label label-success">公司名称</a>
+                                                                    <i th:class="${flag1} == 2?'icon-arrow-up-right3':'hidden'"></i>
+                                                                    <i th:class="${flag1} == 3?'icon-arrow-down-right3':'hidden'"></i>
+                                                                </th>
+                                                                <th><a th:href="@{/audit?(flag1=(${flag1} != 4)?4:5,num=${num},flag=${flag})}" class="label label-success">联系人</a>
+                                                                    <i th:class="${flag1} == 4?'icon-arrow-up-right3':'hidden'"></i>
+                                                                    <i th:class="${flag1} == 5?'icon-arrow-down-right3':'hidden'"></i>
+                                                                </th>
+                                                                <th>联系人手机</th>
+                                                                <th>联系人固话</th>
+                                                                <th>邮箱</th>
+                                                                <th>公司网址</th>
+                                                                <th>工商信息</th>
+                                                                <th><a th:href="@{/audit?(flag1=(${flag1} != 0)?0:1,num=${num},flag=${flag})}" class="label label-success">提交时间</a>
+                                                                    <i th:class="${flag1} == 1?'icon-arrow-up-right3':'hidden'"></i>
+                                                                    <i th:class="${flag1} == 0?'icon-arrow-down-right3':'hidden'"></i>
+                                                                </th>
+                                                                <th><a th:href="@{/audit?(flag1=(${flag1} != 8)?8:9,num=${num},flag=${flag})}" class="label label-success">状态</a></th>
+                                                                <th>操作</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>   <!--未审核表格-->
+                                                            <tr th:each="unaudit,unauditStat:${unauditList}"
+                                                                id="unaudit"
+                                                                th:value="${unauditList}">
+                                                                <td th:text="${unaudit.companyName}">佛山市螺丝科技</td>
+                                                                <td th:text="${unaudit.contactName}">黄先生</td>
+                                                                <td th:text="${unaudit.contactMobile}">18668899221</td>
+                                                                <td th:text="${unaudit.contactPhone}">0757-91988223</td>
+                                                                <td th:text="${unaudit.contactEmail}">163@qq.com</td>
+                                                                <td th:text="${unaudit.website}">http://www.woerjian.com
+                                                                </td>
+                                                                <td><a class="label label-info" data-toggle="modal"
+                                                                       onclick="watch(this)"
+                                                                       th:preurl="${imgurl.IMGPREFIX}"
+                                                                       th:companyName="${unaudit.companyName}"
+                                                                       th:website="${unaudit.website}"
+                                                                       th:companyAddress="${unaudit.companyAddress}"
+                                                                       th:companyType="${unaudit.companyType}"
+                                                                       th:licenseNumber="${unaudit.licenseNumber}"
+                                                                       th:licenseImg="${unaudit.licenseImg}"
+                                                                >浏览</a>   <!-- 触发模态框 -->
+                                                                    <!-- 模态框（Modal） -->
+                                                                    <div class="modal fade myModal" id="myModal"
+                                                                         tabindex="-1" role="dialog"
+                                                                         aria-labelledby="myModalLabel"
+                                                                         aria-hidden="true">
+                                                                        <div class="modal-dialog modal-lg">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <button type="button"
+                                                                                            class="close pull-right"
+                                                                                            data-dismiss="modal"
+                                                                                            aria-hidden="true">&times;</button>
+                                                                                    <h4 class="modal-title"
+                                                                                        id="myModalLabel">工商信息浏览</h4>
+                                                                                </div>
+                                                                                <div class="modal-body ">
+                                                                                    <table class="table-bordered text-center table modaltable">
+                                                                                        <tr>
+                                                                                            <td class="col-md-2">公司名称：</td>
+                                                                                            <td class="col-md-10" id="companyName"></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="col-md-2">公司网站：</td>
+                                                                                            <td class="col-md-10" id="website"></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="col-md-2">公司地址：</td>
+                                                                                            <td class="col-md-10" id="companyAddress"></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="col-md-2">经营类型：</td>
+                                                                                            <td class="col-md-10" id="companyType">
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="col-md-2">营业执照号码：</td>
+                                                                                            <td id="licenseNumber"
+                                                                                                class="licenseNumber col-md-10">
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="col-md-2">营业执照副本图：</td>
+                                                                                            <td class="col-md-10">
+                                                                                                <img src=""
+                                                                                                     class="img-thumbnail"
+                                                                                                     id="licenseImg">
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                            class="btn btn-default"
+                                                                                            data-dismiss="modal">关闭
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div><!-- /.modal-content -->
+                                                                        </div><!-- /.modal -->
+                                                                    </div>
+                                                                </td>
+                                                                <td th:text="${unaudit.certificationTime}">2016-11-25
+                                                                    15:38:48
+                                                                </td>
+                                                                <td th:text="${unaudit.certificationStatus}">认证失败</td>
+                                                                <td><a onclick="pass(this)"
+                                                                       class="label-success label "
+                                                                       th:certificationId="${unaudit.certificationId}"
+                                                                       th:text="通过" id="certificationId">通过</a>
+                                                                    <span></span>
+                                                                    <a th:cn="${unaudit.companyName}"
+                                                                       th:class="${unaudit.certificationStatus} == '认证中'?'veto label-danger label':'hidden'"
+                                                                       id="companyNameveto">否决</a>
+                                                                    <!--th:cn="${audit.comanyName}"  th:href="@{/audit/pass?(certificationId=${unaudit.certificationId})}"-->
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="tab2"
+                                                     th:class="${flag == 2}?'tab-pane fade in active':'tab-pane fade'">
+                                                    <table class="table table-striped table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th><a th:href="@{/audit?(flag1=(${flag1} != 2)?2:3,num=${num},flag=${flag})}" class="label label-success">公司名称</a>
+                                                                <i th:class="${flag1} == 2?'icon-arrow-up-right3':'hidden'"></i>
+                                                                <i th:class="${flag1} == 3?'icon-arrow-down-right3':'hidden'"></i>
+                                                            </th>
+                                                            <th><a th:href="@{/audit?(flag1=(${flag1} != 4)?4:5,num=${num},flag=${flag})}" class="label label-success">联系人</a>
+                                                                <i th:class="${flag1} == 4?'icon-arrow-up-right3':'hidden'"></i>
+                                                                <i th:class="${flag1} == 5?'icon-arrow-down-right3':'hidden'"></i>
+                                                            </th>
+                                                            <th>联系人手机</th>
+                                                            <th>联系人固话</th>
+                                                            <th>邮箱</th>
+                                                            <th>公司网址</th>
+                                                            <th>工商信息</th>
+                                                            <th><a th:href="@{/audit?(flag1=(${flag1} != 0)?0:1,num=${num},flag=${flag})}" class="label label-success">审核时间</a>
+                                                                <i th:class="${flag1} == 1?'icon-arrow-up-right3':'hidden'"></i>
+                                                                <i th:class="${flag1} == 0?'icon-arrow-down-right3':'hidden'"></i>
+                                                            </th>
+                                                            <th>状态</th>
+                                                            <th>操作</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>  <!--已审核表格-->
+                                                        <tr th:each="audit,auditStat:${auditList}">
+                                                            <td th:text="${audit.companyName}">佛山市螺丝科技</td>
+                                                            <td th:text="${audit.contactName}">黄先生</td>
+                                                            <td th:text="${audit.contactMobile}">18668899221</td>
+                                                            <td th:text="${audit.contactPhone}">0757-91988223</td>
+                                                            <td th:text="${audit.contactEmail}">163@qq.com</td>
+                                                            <td th:text="${audit.website}">http://www.woerjian.com</td>
+                                                            <td><a class="label label-info " data-toggle="modal"
+                                                                   onclick="watch2(this)"
+                                                                   th:preurl="${imgurl.IMGPREFIX}"
+                                                                   th:companyName2="${audit.companyName}"
+                                                                   th:website2="${audit.website}"
+                                                                   th:companyAddress2="${audit.companyAddress}"
+                                                                   th:companyType2="${audit.companyType}"
+                                                                   th:licenseNumber2="${audit.licenseNumber}"
+                                                                   th:licenseImg2="${audit.licenseImg}"
+                                                            >浏览</a>
+                                                                <!-- 触发模态框 -->
+                                                                <!-- 模态框（Modal） -->
+                                                                <div class="modal fade myModal2" id="myModal2" tabindex="-1"
+                                                                     role="dialog" aria-labelledby="myModalLabel2"
+                                                                     aria-hidden="true">
+                                                                    <div class="modal-dialog modal-lg">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button"
+                                                                                        class="close pull-right"
+                                                                                        data-dismiss="modal"
+                                                                                        aria-hidden="true">&times;</button>
+                                                                                <h4 class="modal-title"
+                                                                                    id="myModalLabel2">
+                                                                                    工商信息浏览</h4>
+                                                                            </div>
+                                                                            <div class="modal-body table-responsive">
+                                                                                <table class="table-bordered text-center table modaltable">
+                                                                                    <tr>
+                                                                                        <td class="col-md-2">公司名称：</td>
+                                                                                        <td class="col-md-10" id="companyName2"></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="col-md-2">公司网站：</td>
+                                                                                        <td class="col-md-10" id="website2"></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="col-md-2">公司地址：</td>
+                                                                                        <td class="col-md-10" id="companyAddress2"></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="col-md-2">经营类型：</td>
+                                                                                        <td class="col-md-10" id="companyType2">
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="col-md-2">营业执照号码：</td>
+                                                                                        <td id="licenseNumber2"
+                                                                                            class="licenseNumber col-md-10">
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="col-md-2">营业执照副本图：</td>
+                                                                                        <td class="col-md-10">
+                                                                                            <img src=""
+                                                                                                 class="img-thumbnail"
+                                                                                                 id="licenseImg2">
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                        class="btn btn-default"
+                                                                                        data-dismiss="modal">关闭
+                                                                                </button>
+                                                                            </div>
+                                                                        </div><!-- /.modal-content -->
+                                                                    </div><!-- /.modal -->
+                                                                </div>
+                                                            </td>
+                                                            <td th:text="${audit.certificationTime}">2016-11-25 15:38:48
+                                                            </td>
+                                                            <td th:text="${audit.certificationStatus}">认证成功</td>
+                                                            <td>
+                                                                <!--<a onclick="change(this)"
+                                                                   class="label-success label"
+                                                                   th:url="audit"
+                                                                   th:id="certificationId"
+                                                                   th:certificationId="${audit.certificationId}"
+                                                                   th:status="${audit.certificationStatus} == '认证失败'?'认证成功':'认证失败'"
+                                                                   th:text="${audit.certificationStatus} == '认证失败'?'通过认证':'否决认证'" >认证</a>
+                                                                <span></span>-->
+                                                                <a onclick="change(this)"
+                                                                   th:url="audit"
+                                                                   th:id="certificationId"
+                                                                   class="label-warning label"
+                                                                   th:certificationId="${audit.certificationId}"
+                                                                   th:status="认证失败"
+                                                                   th:text="取消认证">取消认证</a>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!--楼下分页-->
+                                            <div th:replace="fragments/page :: audit" ></div>
+                                        </div>
+                                    </div>
+                                </div>
+                           <!-- </form>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--页脚-->
+            <div th:replace="fragments/footer :: footer" class="col-lg-12">
+                &copy; 2013 The Static Templates
+            </div>
+        </div><!--content-wrapper-->
+    </div>
+    <!-- /main content -->
+
+
+</div>
+<!-- /page content -->
+
+</div>
+<!-- /page container -->
+
+
+</body>
+</html>

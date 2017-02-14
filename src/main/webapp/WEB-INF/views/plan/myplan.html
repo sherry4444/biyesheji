@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>窝立方-方案列表</title>
+    <div th:replace="fragments/resourceLink :: resourceLink"></div>
+    <script th:src="@{/resources/js/ModelAlter.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/datatables_basic.js}" ></script>
+    <script type="text/javascript" th:src="@{/resources/js/datatables.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/resources/js/select2.min.js}" ></script>
+    <script th:src="@{/resources/js/uniform.min.js}"></script>
+    <script th:src="@{/resources/js/login.js}"></script>
+    <script th:src="@{/resources/js/user.plan.js}"></script>
+    <script th:src="@{/resources/js/pages/form_layouts.js}"></script>
+    <link rel="stylesheet" th:href="@{/resources/css/planStyle.css}" />
+    <script type="text/javascript" th:src="@{/resources/js/plugins/media/fancybox.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/pages/user_pages_team.js}"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div class="page-container" style="min-height: 518px;">
+    <div class="page-content">
+        <div th:replace="fragments/left :: userLeftItem">&nbsp;</div>
+        <div class="content-wrapper">
+
+            <div class="page-header page-header-default">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h4>
+                            <i class="icon-arrow-left52 position-left"></i>
+                            <span class="text-semibold" >方案列表</span>
+                        </h4>
+                        <a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="content">
+                <div class="panel panel-white r-panel-content">
+                    <div class="panel-body">
+
+                        <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper no-footer">
+                            <div class="datatable-header">
+
+                                <form id="planQuery"   th:action="@{/qualifyPlan}" method="post">
+                                    <input type="hidden" class="tagsIds" th:each="tag,tagIndex:${tags}" th:value="${tag}" th:name="|tags[${tagIndex.index}]|"/>
+                                    <div class="plan-query">
+                                        <div id="DataTables_Table_2_filter" class="dataTables_filter">
+                                            <label>
+                                                <span>搜索：</span>
+                                                <input type="search" class="" placeholder="请输入商品名" aria-controls="DataTables_Table_2"  name="qualifyContent">
+                                                <button type="submit" class="btn btn-default" style="width: 50px;height: 30px;">
+                                                    <i></i>
+                                                </button>
+                                            </label>
+                                        </div>
+                                        <div style="float: right">
+
+                                            <div class="tabbable">
+                                                <ul class="nav nav-tabs nav-tabs-solid nav-tabs-component">
+                                                    <li><a th:href="@{/managementTag}">管理标签</a></li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="p-c-tag">
+                                        <div class="row-groups-i" th:each="group,groupIndex:${planTagGroup}">
+                                            <div class="group-head">
+                                                <span th:text="${group.groupName}"></span>
+                                            </div>
+                                            <div class="group-body">
+                                                <ul>
+                                                    <li>
+                                                        <a th:class="${tags == null?'c-tag':''}"
+                                                           th:href="@{/qualifyPlan?(qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}">所有</a>
+                                                    </li>
+                                                    <li th:each="tag,tagIndex:${planTagList}" th:if="${group.groupId eq tag.groupId}">
+                                                        <a th:class="${tags != null && tags.contains(tag.tagId)?'c-tag':''}"
+                                                           th:href="@{/qualifyPlan?(qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null},tags[0]=${tag.tagId})}" th:text="${tag.tagName}"></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="navbar-header c-plan" style="float: right;display: none">
+
+                                    <div class="tabbable">
+                                        <ul class="nav nav-tabs nav-tabs-solid nav-tabs-component">
+                                            <li><a href="javascript:void(0);" class="copyPlan">复制方案</a></li>
+                                            <li><a href="javascript:void(0);" class="delPlan">删除方案</a></li>
+                                            <li><a href="javascript:void(0);" class="cancel-choice">取消选中</a></li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row planPlate" style="margin-top: 20px">
+                                <div class="col-sm-4 col-lg-2 plan" th:attr="data-id=${plan.planId}" th:each="plan,planindex:${planList}">
+                                    <div>
+                                        <div class="bg-primary-800 demo-color">
+                                            <a th:href="@{https://cdn-test.dodojia.cn/}+${plan.imagePath}" data-popup="lightbox">
+                                                <img  th:src="'https://cdn-test.dodojia.cn/'+${plan.imagePath}+'?x-oss-process=style/product-normal'">
+                                            </a>
+                                        </div>
+
+                                        <div class="p-15">
+                                            <div class="media-body">
+                                                <a target="_blank" th:href="@{/queryOnePlan?planId=}+${plan.planId}">
+                                                <span>
+                                                    <strong th:text="${plan.title}"></strong>
+                                                </span>
+                                                </a>
+                                            </div>
+
+                                            <div class="media-right">
+                                                <ul class="icons-list">
+                                                    <li><input type="checkbox" class="styled"></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="datatable-footer">
+                                <div class="dataTables_info" id="DataTables_Table_2_info" role="status" aria-live="polite">
+                                    <span style="line-height: 38px;float: right" th:text="'显示'+${planList != null && planList.size() != 0 ? (page.dbIndex+1)+'到'+(page.dbIndex+planList.size())+'的'+planList.size():'0'}+'项'"></span>
+                                    <div class="dataTables_length" id="DataTables_Table_2_length">
+                                        <label>
+                                            <span>显示：</span>
+                                            <select name="pageNumber" id="plan-page-num"
+                                                    class="select2-hidden-accessible" tabindex="-1" th:attr="data-currentPage=${page.currentPage},data-url='qualifyPlan',data-querytool=${page.querytool.qualifyContent}" >
+                                                <option value="12" th:attr="selected=${page.pageNumber == 12 ? true:false}">12</option>
+                                                <option value="24" th:attr="selected=${page.pageNumber == 24 ? true:false}">24</option>
+                                                <option value="48" th:attr="selected=${page.pageNumber == 48 ? true:false}">48</option>
+                                                <option value="96" th:attr="selected=${page.pageNumber == 96 ? true:false}">96</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_2_paginate">
+                                    <a th:if="${page.currentPage} gt 1" th:class="|paginate_button previous${page.currentPage != 1?'':'disabled'}|" aria-controls="DataTables_Table_2"
+                                       th:href="@{/qualifyPlan?(currentPage=${page.currentPage-1},qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}" data-dt-idx="0" tabindex="0" >
+                                        <span>← </span>
+                                    </a>
+                                    <span>
+                                        <a th:if="${page.currentPage != 1}" th:href="@{/qualifyPlan?(currentPage=1,qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}"
+                                           class="paginate_button"  aria-controls="DataTables_Table_2" tabindex="0">
+                                            <span>首页</span>
+                                        </a>
+                                        <a th:each="pageNo : ${#numbers.sequence(page.currentPage - 3 < 0 ? 0 : page.currentPage - 3, page.currentPage + 3 > page.totalPage - 3 ? page.totalPage - 1 : page.currentPage + 3)}"
+                                           th:href="@{/qualifyPlan?(currentPage=${pageNo+1},qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}"
+                                           th:class="|paginate_button ${page.currentPage eq (pageNo+1)?'current':''}|" aria-controls="DataTables_Table_2" data-dt-idx="1" tabindex="0">
+                                            <span th:text="${pageNo + 1}"></span>
+                                        </a>
+                                        <a th:if="${page.currentPage != page.totalPage}" th:href="@{/qualifyPlan?(currentPage=${page.totalPage},qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}"
+                                           class="paginate_button"  aria-controls="DataTables_Table_2" tabindex="0">
+                                            <span>尾页</span>
+                                        </a>
+                                    </span>
+                                    <a th:if="${page.currentPage} lt ${page.totalPage}" th:href="@{/qualifyPlan?(currentPage=${page.nextPage},qualifyContent=${page.querytool != null ? page.querytool.qualifyContent:null})}"
+                                       class="paginate_button next" aria-controls="DataTables_Table_2" data-dt-idx="3" tabindex="0" id="DataTables_Table_2_next">
+                                        <span> →</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
+</body>
+</html>

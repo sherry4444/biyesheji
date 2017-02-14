@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.luosee.pay.PayDao">
+<insert id="createTransaction" parameterType="com.luosee.pay.UserPay">
+    INSERT INTO tb_user_pay(userId,payType,money,outTradeNo,payCreateDate) VALUES (#{userId},#{payType},#{money},#{outTradeNo},now())
+</insert>
+
+<insert id="createPayment" parameterType="com.luosee.pay.Subscribe">
+    INSERT INTO tb_user_subscribe(validityDate,payType,userId) VALUES (#{validityDate},#{payType},#{userId})
+</insert>
+
+<update id="updateUserPayInfo"  parameterType="com.luosee.pay.UserPay">
+    UPDATE tb_user_pay SET tradeNo=#{tradeNo},tradeStatus=#{tradeStatus}<if test="tradeStatus.equals('TRADE_SUCCESS') || tradeStatus.equals('TRADE_FINISHED')">,payDate=#{payDate}</if>
+    WHERE outTradeNo=#{outTradeNo}
+</update>
+
+<update id="updateUserPayment"  parameterType="com.luosee.pay.Subscribe">
+    UPDATE tb_user_subscribe SET validityDate=#{validityDate} WHERE userId=#{userId} and payType=#{payType}
+</update>
+
+<select id="hasPayment" resultType="com.luosee.pay.Subscribe" parameterType="java.lang.Integer">
+    select validityDate FROM tb_user_subscribe WHERE userId=#{userId};
+</select>
+
+<select id="userPackage" resultType="com.luosee.pay.Subscribe" parameterType="java.lang.String">
+    select validityDate,payType from tb_user_subscribe us INNER JOIN tb_user u ON us.userId=u.userId and username=#{username}
+</select>
+
+</mapper>

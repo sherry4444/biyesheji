@@ -1,0 +1,74 @@
+body,html
+{
+	padding: 0!important;
+	margin: 0!important;
+	background-color: #f5f5f5;
+}
+.navbar-brand img
+{
+	width: 100px;
+	height: 30px;
+	margin-top: 0!important;
+}
+.sidebar-user-metarial
+{
+	width: 100%;
+	min-height: 219px;
+}
+.sidebar-user-metarial-content
+{
+	text-align: center;
+}
+.legitRipple img
+{
+	margin: 0 auto;
+}
+.dropdown-user
+{
+	max-height: 46px;
+	max-width: 180px;
+}
+.navbar-inverse
+{
+	margin-bottom: 0;
+}
+a:hover
+{
+	text-decoration: none;
+}
+.visible-xs-block
+{
+	float: right!important;
+}
+.visible-xs-block li
+{
+	float: left;
+}
+.form-group
+{
+	min-height: 36px;
+}
+.text-size-small
+{
+	width: 100%;
+	display: block;
+}
+.sidebar-user-metarial-content
+{
+	text-overflow: ellipsis;
+	overflow: hidden;
+	word-wrap: normal;
+}
+.user_nav span
+{
+	text-overflow: ellipsis;
+	overflow: hidden;
+	word-wrap: normal;
+	width: 90px!important;
+	height: 25px!important;
+	display: block;
+}
+.navbar-brand
+{
+	padding-top: 6px;
+}

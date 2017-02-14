@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.luosee.plan.PlanDao">
+
+    <sql id="plan_query">mp.planId planId,title,imagePath</sql>
+
+    <insert id="addGroup" parameterType="com.luosee.plan.TagGroup">
+        INSERT INTO tb_plan_tag_group(groupName,userId) VALUES (#{groupName},#{userId})
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="groupId">
+            SELECT LAST_INSERT_ID() AS groupId
+        </selectKey>
+    </insert>
+
+    <insert id="addTag" parameterType="com.luosee.plan.PlanTag">
+        INSERT INTO tb_plan_tag(tagName,groupId) VALUES (#{tagName},#{groupId})
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="tagId">
+            SELECT LAST_INSERT_ID() AS tagId
+        </selectKey>
+    </insert>
+
+    <insert id="addRalation" parameterType="java.util.List">
+        INSERT INTO tb_plan_tag_relation(tagId,planId) VALUES
+        <foreach collection="list" item="ralate" separator=",">
+            (#{ralate.tagId},#{ralate.planId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteGroup" parameterType="com.luosee.plan.TagGroup">
+        DELETE ptg,pt,ptr
+        FROM tb_plan_tag_group ptg
+        LEFT OUTER JOIN tb_plan_tag pt ON ptg.groupId=pt.groupId
+        LEFT OUTER JOIN tb_plan_tag_relation ptr ON  ptr.tagId=pt.tagId where  ptg.groupId=#{groupId}
+    </delete>
+
+    <delete id="deleteTag" parameterType="com.luosee.plan.PlanTag">
+        DELETE FROM tb_plan_tag where tagId=#{tagId}
+    </delete>
+
+    <delete id="deletePlan" parameterType="java.util.Map">
+        DELETE mp,mf FROM tb_my_plans mp,tb_my_floorplans mf,tb_user u where planId
+         <foreach collection="planId" item="id" open="in(" separator="," close=")">
+             #{id}
+         </foreach>
+        and mp.floorPlanId=mf.floorPlanId and username=#{username} and mp.userId=u.userId
+    </delete>
+
+    <delete id="deleteChildPlan" parameterType="java.util.List">
+        DELETE mp,mf FROM tb_my_plans mp,tb_my_floorplans mf
+        WHERE
+        <foreach collection="list" open="mp.userId in (" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteChildTag" parameterType="java.util.List">
+        DELETE ptg,pt,ptr
+        FROM tb_plan_tag_group ptg
+        LEFT OUTER JOIN tb_plan_tag pt ON ptg.groupId=pt.groupId
+        LEFT OUTER JOIN tb_plan_tag_relation ptr ON  ptr.tagId=pt.tagId
+        WHERE
+        <foreach collection="list" open="userId in (" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updateGroupName" parameterType="com.luosee.plan.TagGroup">
+        UPDATE tb_plan_tag_group SET groupName=#{groupName} where groupId=#{groupId}
+    </update>
+
+    <update id="updateTagName" parameterType="com.luosee.plan.PlanTag">
+        UPDATE tb_plan_tag SET tagName=#{tagName} where tagId=#{tagId}
+    </update>
+
+    <update id="updatePlan" parameterType="java.util.Map">
+        UPDATE tb_my_plans mp
+        <if test="relations!=null" >
+        INNER JOIN tb_plan_tag_relation ptr ON mp.planId=ptr.planId
+        </if>
+        INNER JOIN tb_user u ON mp.userId=u.userId and username=#{username}
+        SET
+        title = #{plan.title}
+        <if test="relations!=null" >,
+        tagId = CASE ralationId
+        <foreach collection="relations" item="relate" close="END">
+            WHEN #{relate.ralationId} THEN #{relate.tagId}
+        </foreach>
+        </if>
+        WHERE
+        mp.planId=#{plan.planId}
+    </update>
+
+    <select id="findPlan" resultType="com.luosee.plan.Plan" parameterType="java.util.Map">
+        SELECT mp.planId planId,title,imagePath
+        FROM tb_my_plans as mp
+        INNER JOIN tb_user as u ON mp.userId=u.userId and u.username=#{page.querytool.username}
+        LEFT JOIN tb_plan_tag_relation ptr ON mp.planId=ptr.planId
+        where
+        title like '%${page.querytool.qualifyContent}%'
+        <if test="tags != null">
+            and ptr.tagId
+            <foreach collection="tags" item="tag" open="in(" separator="," close=")">
+                #{tag}
+            </foreach>
+        </if>
+        GROUP BY mp.planId
+        ORDER BY mp.planId DESC
+        limit #{page.dbIndex},#{page.dbNumber}
+    </select>
+
+    <select id="findUserPlanCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+         SELECT count(DISTINCT mp.planId)
+        FROM tb_my_plans as mp
+        INNER JOIN tb_user as u ON mp.userId=u.userId and u.username=#{page.querytool.username}
+        LEFT JOIN tb_plan_tag_relation ptr ON mp.planId=ptr.planId
+        where
+        title like '%${page.querytool.qualifyContent}%'
+        <if test="tags != null">
+            and ptr.tagId
+            <foreach collection="tags" item="tag" open="in(" separator="," close=")">
+                #{tag}
+            </foreach>
+        </if>
+        ORDER BY mp.planId DESC
+    </select>
+
+    <select id="findUserPlanTagGroup" resultType="com.luosee.plan.TagGroup" parameterType="java.lang.String">
+        SELECT groupId,groupName
+        FROM tb_plan_tag_group ptg
+        INNER JOIN tb_user u ON ptg.userId=u.userId and username=#{username}
+    </select>
+
+    <select id="fingUserPlanTag" resultType="com.luosee.plan.PlanTag" parameterType="java.lang.String">
+        SELECT tagId,tagName,pt.groupId groupId
+        FROM tb_plan_tag pt
+        INNER JOIN tb_plan_tag_group ptg ON pt.groupId=ptg.groupId
+        INNER JOIN tb_user u ON ptg.userId=u.userId and username=#{username}
+    </select>
+
+    <select id="queryTagRelation" resultType="java.lang.Integer" parameterType="int">
+        SELECT ralationId FROM tb_plan_tag_relation where planId=#{planId}
+    </select>
+
+    <select id="findOnePlanById" resultType="com.luosee.plan.Plan" parameterType="int">
+        SELECT * FROM tb_my_plans where planId=#{planId}
+    </select>
+
+    <select id="findOnePlanSubGroup" resultType="java.lang.Integer" parameterType="int">
+        SELECT groupId FROM tb_plan_tag_relation ptr INNER JOIN tb_plan_tag pt on ptr.tagId=pt.tagId where planId=#{planId}
+    </select>
+
+    <select id="findOnePlanSubTag" resultType="java.lang.Integer" parameterType="int">
+        SELECT tagId FROM tb_plan_tag_relation where planId=#{planId}
+    </select>
+
+    <select id="queryUserGroupCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(*) FROM tb_plan_tag_group ptg INNER JOIN tb_user u ON ptg.userId = u.userId and username=#{username}
+    </select>
+
+    <select id="queryHasGroupName" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT groupId FROM tb_plan_tag_group ptg
+        INNER JOIN tb_user u ON ptg.userId=u.userId and username=#{username}
+        where groupName=#{groupName}
+        <if test="groupId !=null">
+             and groupId != #{groupId}
+        </if>
+    </select>
+
+    <select id="queryHasTagName" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT pt.tagId FROM tb_plan_tag pt
+        INNER JOIN tb_plan_tag_group ptg ON pt.groupId=ptg.groupId
+        INNER JOIN tb_user u ON u.userId=ptg.userId and username=#{username}
+        where tagName=#{tagName}
+        <if test="tagId !=null">
+        and tagId != #{tagId}
+        </if>
+    </select>
+
+    <select id="queryFloorPlanUrl" resultType="java.lang.String" parameterType="java.util.List">
+        SELECT floorPlanUrl FROM tb_my_floorplans
+        WHERE
+        <foreach collection="list" open="userId in (" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="queryPlanResources" resultType="com.luosee.plan.Plan" parameterType="java.util.List">
+        SELECT imagePath,downloadU3DUrl FROM tb_my_plans
+        WHERE
+        <foreach collection="list" open="userId in (" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </select>
+
+</mapper>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>窝立方</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <div th:replace="fragments/resourceLink :: resourceLink"></div>
+    <link rel="stylesheet" th:href="@{/resources/css/userPay.css}" />
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+<div class="pay-body">
+    <div class="pay-info">
+        <div class="pay-info-title">
+            <h2 th:text="'当前账号：'+${#authentication.getName()}"></h2>
+        </div>
+        <div class="pay-order">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr class="bg-blue">
+                        <th>订单号</th>
+                        <th>付费类型</th>
+                        <th>金额</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1021545415454</td>
+                        <td>
+                            <span>月费</span>
+                        </td>
+                        <td>0.01</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
+</body>
+</html>

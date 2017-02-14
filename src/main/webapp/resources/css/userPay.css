@@ -1,0 +1,54 @@
+.pay-body
+{
+    margin: 0 auto;
+    background-color: #fff;
+    max-width: 1300px;
+    min-height: 900px;
+    overflow: auto;
+    font-family: Tahoma,Helvetica,Arial,sans-serif;
+}
+.pay-info
+{
+    width: 100%;
+    height: 175px;
+}
+.r-pay
+{
+    width: 175px;
+    height: 175px;
+    margin: 20px;
+}
+.r-pay,.pay-info-c
+{
+    float: left;
+}
+.pay-info-c
+{
+    height:175px ;
+}
+.pay-info-title
+{
+    color: #222222;
+    margin: 20px;
+}
+.pay-validity
+{
+    color: #333333;
+    text-align: center;
+    line-height:30px;
+    height: 30px;
+    margin-bottom: 20px;
+}
+.pay-type-s
+{
+    display: block;
+    border: 1px solid #01a0e4;
+}
+.pay-validity strong
+{
+    color: red!important;
+}
+.pay-order
+{
+    margin: 20px;
+}

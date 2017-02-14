@@ -1,0 +1,416 @@
+.banner
+{
+	height: 84px;
+	background-image: url(../../images/banner_wlf.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+body
+{
+	padding: 0;
+	margin: 0;
+	background-color: #f6f6f6!important;
+}
+.top,.banner,.sa-main,.sale-product,.commodities,.love-commodities
+{
+	width: 1284px;
+}
+.top,.banner,.sa-main,.sale-product,.commodities,.love-commodities
+{
+	margin: 0 auto;
+}
+.top
+{
+	height: 130px;
+	text-align: center;
+}
+.logo
+{
+	background-image: url(../../images/logo.png);
+	background-repeat: no-repeat;
+	width:141px;
+	height: 42px;
+	margin-top: 44px;
+	margin-left: 10px;
+}
+.logo,.search input,.search button,.search,.sidebar,.menu ul > li,.banner-imgs,.news,.new-nav ul li,.commoditie-seller ul li,.love-commoditie
+{
+	float: left;
+}
+.search
+{
+	width: 500px;
+	height: 30px;
+	margin-left: 292px;
+	margin-top: 50px;
+}
+.search input
+{
+	border: 1px solid #CBB993;
+	outline: none;
+	width: 448px;
+}
+.search input,.search button
+{
+	height: 30px;
+	box-sizing: border-box;
+}
+.search button
+{
+	width: 50px;
+	border: none;
+	outline: none;
+	background-color: #CBB993;
+	color: #FFFFFF;
+}
+.sa-main,.sidebar,.banner-imgs,.banner-imgs ul > li > a > img,.news
+{
+	height: 338px;
+}
+.sidebar
+{
+	background-color: #CBB993;
+}
+.sidebar,.menu,.menu ul > div
+{
+	width: 200px;
+}
+.menu-type
+{
+	color:#FFFFFF;
+	font-weight: bold;
+	text-indent: 2mm;
+}
+.menu
+{
+	height: 39px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+.menu ul,.banner-imgs ul,.subnav ul,.new-nav ul,.new-content ul,.commoditie-seller ul
+{
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+}
+.menu ul a
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.menu ul a:hover
+{
+	text-decoration: underline;
+}
+.menu ul > li,.menu ul > div
+{
+	margin-left: 15px;
+}
+.menu ul > div > a
+{
+	font-weight: bold;
+}
+.menu ul > div
+{
+	color: #8A6D3B;
+}
+.banner-imgs,.banner-imgs ul > li > a > img
+{
+	width: 820px;
+}
+.banner-imgs ul 
+{
+	position: relative;
+}
+.banner-imgs ul li
+{
+	display: none;
+}
+.show-banner-imgs
+{
+	display: block!important;
+}
+.banner-imgs,.news
+{
+	overflow: hidden;
+	margin-left: 20px;
+}
+.news
+{
+	background-color: #FFFFFF;
+}
+.news,.new-user,.new-main,.new-nav,.new-content,.new-content ul
+{
+	width: 224px;
+}
+.new-user
+{
+	height: 120px;
+	border-bottom: 1px solid #DDDDDD;
+	margin-top: 10px;
+}
+.title-user
+{
+	text-align: center;
+}
+.title-user
+{
+	color: #999999;
+}
+.subnav ul li
+{
+	float: left;
+	margin-left:50px ;
+}
+.subnav ul li a
+{
+	display: block;
+	color: #666666;
+}
+.subnav ul li a:hover
+{
+	color: #2266BB;
+}
+.new-main
+{
+	height: 207px;
+}
+.new-nav
+{
+	height: 30px;
+}
+.new-nav ul li
+{
+	width: 40px;
+	height: 20px;
+	text-align: center;
+	line-height: 20px;
+	margin-top: 5px;
+	border-right: 1px solid #DDDDDD;
+}
+.new-content
+{
+	height: 177px;
+}
+.new-content ul
+{
+	height: 147px;
+}
+.new-content ul li a
+{
+	text-indent: 2mm;
+	display: block;
+	color: #333333;
+}
+.new-more
+{
+	float: right;
+	margin-right: 10px;
+}
+.sale-product
+{
+	margin-top: 20px;
+	background-color: #FFFFFF;
+	min-height:150px;
+	overflow: auto;
+}
+.sale-product h4
+{
+	color: red;
+	text-indent: 3mm;
+}
+.products,.products img
+{
+	width: 141px;
+	height: 105px;
+	float: left;
+}
+.products
+{
+	position: relative;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+.sale
+{
+	background-image: url(../../images/sale.png);
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 2;
+	width: 40px;
+	height: 27px;
+}
+.menu-type,.sale-product h4,.commoditie h4,.love-title span
+{
+	font-family: "隶书";
+}
+.commoditie h4
+{
+	text-indent: 2mm;
+	color: #C0A16B;
+}
+.commodities
+{
+	min-height: 200px;
+	background-color: #FFFFFF;
+	margin-top: 20px;
+	overflow: auto;
+}
+.commoditie-banner
+{
+	width: 220px;
+	height: 110px;
+}
+.commoditie-region,.commoditie
+{
+	width: 622px;
+	float: left;
+}
+.commoditie-region
+{
+	margin: 10px;
+}
+.commoditie
+{
+	min-height: 150px;
+	overflow: auto;
+	border: 1px solid #DDDDDD;
+	margin-bottom: 10px;
+}
+.commoditie-seller ul li a
+{
+	text-decoration: none;
+	color: #3c3c3c;
+	font: tahoma,arial,'Hiragino Sans GB','\5b8b\4f53',sans-serif;
+}
+.commoditie-seller ul li
+{
+	margin: 5px;
+}
+.commoditie-seller
+{
+	width: 610px;
+	overflow: auto;
+}
+.commoditie-seller ul li a:hover
+{
+	text-decoration: underline;
+}
+.building-material
+{
+	background-image: url(../../images/building-material.jpg);
+}
+.lanterns,.building-material
+{
+	background-repeat:no-repeat;
+}
+.lanterns
+{
+	background-image: url(../../images/lanterns.jpg);
+}
+.commoditie-seller,.commoditie-banner
+{
+	margin-left: 10px;
+}
+.love-commodities
+{
+	min-height: 200px;
+	overflow: auto;
+	background-color: #FFFFFF;
+	margin-top: 20px;
+}
+.love-title
+{
+	text-align: center;
+	width: 1264px;
+	margin:10px;
+	border-bottom: 2px dashed #DDDDDD;
+	height: 30px;
+	line-height: 30px;
+}
+.love-title span
+{
+	color: #C0A16B;
+	font-size: 18px;
+}
+.love-title span:before
+{
+	content: "\2764";
+	color:red;
+}
+.love-commodities-main
+{
+	width: 1264px;
+	min-height:150px;
+	overflow: auto;
+	margin: 10px;
+}
+.love-commoditie
+{
+	height: 212px;
+	border: 1px solid #DDDDDD;
+	margin: 12px;
+	position: relative;
+}
+.love-commoditie img,.love-commoditie,.commoditie-info,.commoditie-model
+{
+	width: 240px;
+}
+.love-commoditie img
+{
+	height: 182px;
+}
+.commoditie-info,.commoditie-model
+{
+	height: 30px;
+}
+.commoditie-info a
+{
+	color:#777777;
+	text-indent: 2mm;
+	line-height: 30px;
+	float: left;
+	display: block;
+	width: 200px;
+	height: 30px;
+	text-overflow: clip;
+	overflow: initial;
+	word-wrap: normal;
+}
+.commoditie-info a,.commoditie-model a
+{
+	text-decoration: none;
+}
+.commoditie-info span
+{
+	float: right;
+	color: red;
+}
+.commoditie-model
+{
+	position: absolute;
+	left: 0;
+	top: 152px;
+	background-color:#31B0D5;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+	z-index: 2;
+	display: none;
+}
+.commoditie-model a
+{
+	color: #FFFFFF;
+	line-height: 30px;
+	text-indent: 2mm;
+	display: block;
+}
+.commoditie-model a:hover
+{
+	color: #FFFFFF;
+}
+.love-commoditie:hover .commoditie-model
+{
+	display: block;
+}

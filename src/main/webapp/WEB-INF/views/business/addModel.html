@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>窝立方-制作模型</title>
+	<div th:replace="fragments/resourceLink :: resourceLink"></div>
+	<script th:src="@{/resources/js/business_model.js}"></script>
+	<script th:src="@{/resources/js/ModelAlter.js}"></script>
+	<script th:src="@{/resources/js/uploadImage.js}"></script>
+	<script th:src="@{/resources/js/ImageFile.js}"></script>
+	<script type="text/javascript" th:src="@{/resources/js/datatables_basic.js}" ></script>
+	<script type="text/javascript" th:src="@{/resources/js/datatables.min.js}" ></script>
+	<script type="text/javascript" th:src="@{/resources/js/select2.min.js}" ></script>
+	<script th:src="@{/resources/js/pages/form_layouts.js}"></script>
+	<script th:src="@{/resources/js/uniform.min.js}"></script>
+	<link rel="stylesheet" th:href="@{/resources/css/planStyle.css}" />
+	<script th:src="@{/resources/js/sign.js}"></script>
+	<style>
+		.select2,.r-info
+		{
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+		.demo-color img,.demo-color
+		{
+			width: 250px;
+			height:150px;
+		}
+		.select2, .select2 span
+		{
+			width: 100%!important;
+		}
+	</style>
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div class="page-container" style="min-height: 518px;">
+	<div class="page-content">
+		<div th:replace="fragments/left :: userLeftItem">&nbsp;</div>
+		<div class="content-wrapper">
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>
+							<i class="icon-arrow-left52 position-left"></i>
+							<span class="text-semibold" >制作模型</span>
+						</h4>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+				</div>
+
+			</div>
+			<div class="content">
+				<div class="panel panel-white r-panel-content">
+					<div class="panel-body">
+						<form id="modelform" data-th-action="@{/addModel}+'?_csrf='+${_csrf.token}" method="post" enctype="multipart/form-data">
+							<input type="hidden" name="token" th:value="${session.token}">
+							<fieldset class="step ui-formwizard-content" id="step1" style="display: block;">
+								<h6 class="form-wizard-title text-semibold">
+									模型信息
+									<small class="display-block">请填写模型信息</small>
+								</h6>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>模型名称:</label>
+											<input type="text" name="modelName" class="form-control ui-wizard-content">
+											<span class="help-block"></span>
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>风格:</label>
+											<div class="row">
+												<select name="styleId" class="style-item select ui-wizard-content select2-hidden-accessible" >
+													<option data-th-each="style,styleIndex:${styleList}" data-th-value="${style.styleId}" data-th-text="${style.styleName}"></option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>种类:</label>
+											<div class="row">
+												<select name="typeId" class="style-item select ui-wizard-content select2-hidden-accessible" >
+													<option data-th-each="type,typeIndex:${typeList}" data-th-value="${type.typeId}" data-th-text="${type.typeName}">地面</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group r-info">
+										<label>详细介绍:</label>
+										<textarea name="description" rows="5" cols="5" class="form-control"></textarea>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="form-group r-info">
+										<label>参考图:
+											<span class="help-block"></span>
+										</label>
+										<div class="row modelDiagram">
+											<div class="col-sm-4 col-lg-2 addModelImage">
+												<div>
+													<div class="bg-primary-800 demo-color">
+														<img th:src="@{/resources/images/brand.jpg}"/>
+													</div>
+
+													<div class="p-15">
+														<div class="media-body">
+                                                            <span>
+                                                                <strong>添加参考图</strong>
+                                                            </span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</fieldset>
+							<div class="form-wizard-actions">
+								<button class="btn btn-info ui-wizard-content ui-formwizard-button" type="button" id="model_sub" value="提交" >提交</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
+</body>
+</html>

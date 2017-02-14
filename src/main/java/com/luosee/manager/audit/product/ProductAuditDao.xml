@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luosee.manager.audit.product.ProductAuditDao">
+   <!--
+    private Integer productId;//商品ID
+    private Integer styleId;//商品种类ID
+    private String styleName;//商品种类名字
+    private String productName;//商品名称
+    private String description;//商品描述
+    private String isSelling;//是否在售
+    private String introduceImg;//商品图片
+    private Timestamp lastModified;//最后修改时间
+    private String certificationStatus;//认证状态
+    private String certificationCause;//认证原因
+    private Timestamp certificationTime;//认证时间
+
+    -->
+    <resultMap type="com.luosee.manager.audit.product.ProductAudit" id="ProductAuditResultMap">
+        <id property="productId" column="productId" />
+        <result property="styleId" column=" styleId" />
+        <result property="styleName" column="styleName" />
+        <result property="productName" column="productName" />
+        <result property="description" column="description" />
+        <result property="isSelling" column="isSelling" />
+        <result property="introduceImg" column="introduceImg" />
+        <result property="lastModified" column="lastModified" />
+        <result property="certificationStatus" column="certificationStatus" />
+        <result property="certificationCause" column="certificationCause" />
+        <result property="certificationTime" column="certificationTime" />
+        <result property="productstatus" column="productstatus" />
+        <result property="attachType" column="attachType" />
+        <result property="scaleType" column="scaleType" />
+        <result property="rotateType" column="rotateType" />
+        <result property="tagNames" column="tagNames" />
+        <result property="typeId" column="typeId" />
+        <result property="introduceImg" column="introduceImg" />
+    </resultMap>
+
+
+    <select id="selectAllunaudited"  resultMap="ProductAuditResultMap" parameterType="java.util.Map">
+        SELECT a.productId,a.styleId,b.styleName,a.productName,a.description,a.isSelling,a.introduceImg,a.lastModified,a.certificationStatus,
+        a.certificationCause,a.certificationTime,a.productstatus
+        from tb_product_copy a left join tb_product_style_copy b on a.productId = b.productId
+        <where>
+            (certificationStatus = '认证中' or certificationStatus = '认证失败')
+            <if test="title != null">
+                and a.productName like '%${title}%'
+            </if>
+        </where>
+        <if test="flag1 == '6'.toString()">
+            ORDER BY a.productId ASC
+        </if>
+        <if test="flag1 == '7'.toString()">
+            ORDER BY a.productId DESC
+        </if>
+        <if test="flag1 == '2'.toString()">
+            ORDER BY b.styleName ASC
+        </if>
+        <if test="flag1 == '3'.toString()">
+            ORDER BY b.styleName DESC
+        </if>
+        <if test="flag1 == '4'.toString()">
+            ORDER BY a.productName ASC
+        </if>
+        <if test="flag1 == '5'.toString()">
+            ORDER BY a.productName DESC
+        </if>
+        <if test="flag1 == '1'.toString()">
+            ORDER BY a.lastModified ASC
+        </if>
+        <if test="flag1 == '0'.toString()">
+            ORDER BY a.lastModified DESC
+        </if>
+        <if test="flag1 == '8'.toString()">
+            ORDER BY a.certificationStatus ASC
+        </if>
+        <if test="flag1 == '9'.toString()">
+            ORDER BY a.certificationStatus DESC
+        </if>
+        limit #{page.dbIndex},#{page.dbNumber}
+    </select>
+
+    <select id="selectAllaudited"  resultMap="ProductAuditResultMap" parameterType="java.util.Map">
+        SELECT a.productId,a.styleId,a.productName,a.description,a.isSelling,a.introduceImg,a.lastModified,b.styleName,
+        a.certificationStatus,a.certificationCause,a.certificationTime,a.productstatus,a.attachType,a.rotateType,a.tagNames,a.typeId,a.scaleType
+        from tb_product_copy a left join tb_product_style_copy b on a.productId = b.productId
+        <where>
+            certificationStatus = '认证成功'
+            <if test="title != null">
+                and a.productName like '%${title}%'
+            </if>
+        </where>
+        <if test="flag1 == '6'.toString()">
+            ORDER BY a.productId ASC
+        </if>
+        <if test="flag1 == '7'.toString()">
+            ORDER BY a.productId DESC
+        </if>
+        <if test="flag1 == '2'.toString()">
+            ORDER BY b.styleName ASC
+        </if>
+        <if test="flag1 == '3'.toString()">
+            ORDER BY b.styleName DESC
+        </if>
+        <if test="flag1 == '4'.toString()">
+            ORDER BY a.productName ASC
+        </if>
+        <if test="flag1 == '5'.toString()">
+            ORDER BY a.productName DESC
+        </if>
+        <if test="flag1 == '1'.toString()">
+            ORDER BY a.lastModified ASC
+        </if>
+        <if test="flag1 == '0'.toString()">
+            ORDER BY a.lastModified DESC
+        </if>
+        limit #{page.dbIndex},#{page.dbNumber}
+    </select>
+
+    <select id="countun" parameterType="java.util.Map" resultType="int">
+        SELECT count(*) from tb_product_copy a left join tb_product_style_copy b on a.productId = b.productId
+        WHERE (certificationStatus = '认证中' or certificationStatus = '认证失败')
+        <if test="title != null">
+            and a.productName like '%${title}%'
+        </if>
+    </select>
+
+    <select id="count" parameterType="java.util.Map" resultType="int">
+        SELECT count(*) from tb_product_copy a left join tb_product_style_copy b on a.productId = b.productId
+        <where>
+        certificationStatus = '认证成功'
+            <if test="title != null">
+                and a.productName like '%${title}%'
+            </if>
+       </where>
+    </select>
+
+    <update id="veto" parameterType="com.luosee.manager.audit.product.ProductAudit">
+        UPDATE tb_product_copy set certificationCause=#{certificationCause},certificationStatus=#{certificationStatus} WHERE productName=#{productName}
+    </update>
+
+    <update id="pass" parameterType="com.luosee.manager.audit.product.ProductAudit">
+        UPDATE tb_product_copy set certificationStatus=#{certificationStatus} WHERE productId=#{productId}
+    </update>
+
+    <update id="cancel" parameterType="com.luosee.manager.audit.product.ProductAudit">
+        UPDATE tb_product_copy set certificationStatus=#{certificationStatus} WHERE productId=#{productId}
+    </update>
+
+    <update id="change" parameterType="com.luosee.manager.audit.product.ProductAudit">
+         UPDATE tb_product_copy set certificationStatus=#{certificationStatus} WHERE productId=#{productId}
+    </update>
+
+    <update id="changestatus" parameterType="com.luosee.manager.audit.product.ProductAudit" >
+        UPDATE tb_product_copy set productstatus=#{productstatus} WHERE productId=#{productId}
+    </update>
+
+    <update id="edit" parameterType="com.luosee.manager.audit.product.ProductAudit">
+        UPDATE tb_product_copy
+        <set>
+            <if test="productName != null and productName != ''">
+                productName=#{productName},
+            </if>
+            <if test="description != null and description != ''">
+                description=#{description},
+            </if>
+            <if test="typeId != null and typeId != ''">
+                typeId=#{typeId},
+            </if>
+            <if test="styleId != null and styleId != ''">
+                styleId=#{styleId},
+            </if>
+            <if test="attachType != null and attachType != ''">
+                attachType=#{attachType},
+            </if>
+            <if test="scaleType != null and scaleType != ''">
+                scaleType=#{scaleType},
+            </if>
+            <if test="rotateType != null and rotateType != ''">
+                rotateType=#{rotateType},
+            </if>
+            <if test="tagNames != null and tagNames != ''">
+                tagNames=#{tagNames},
+            </if>
+            <if test="introduceImg != null and introduceImg != ''">
+                introduceImg=#{introduceImg}
+            </if>
+        </set>
+        WHERE productId=#{productId}
+    </update>
+
+</mapper>
+

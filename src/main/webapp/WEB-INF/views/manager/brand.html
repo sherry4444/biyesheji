@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sd="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="_csrf" th:attr="content=${_csrf.token}"/>
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>窝立方-品牌审核</title>
+    <link href="../../../resources/css/manager.css" rel="stylesheet" media="screen" th:href="@{/resources/css/manager.css}"/>
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}"/>
+    <link href="http://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../../resources/css/pagination.css" rel="stylesheet" media="screen" th:href="@{/resources/css/pagination.css}"/>
+    <div th:replace="fragments/resourceLink :: resourceLink"></div>
+   <!-- <script src="http://code.jquery.com/jquery-latest.js"></script>-->
+    <script src="../../../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery.min.js}"></script>
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+    <script src="../../../resources/js/audit.js" th:src="@{/resources/js/brand.js}"></script>
+    <script src="../../../resources/js/manager.js" th:src="@{/resources/js/manager.js}"></script>
+    <script src="http://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
+
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse" th:replace="fragments/header :: header">
+    heah
+</div>
+
+
+<!-- Page container -->
+<div class="page-container">
+
+    <!-- Page content -->
+    <div class="page-content">
+
+        <!-- Main sidebar -->
+        <div class="sidebar sidebar-main">
+            <div th:replace="fragments/leftmanager :: leftmanager"></div>
+        </div>
+        <!-- /main sidebar -->
+
+
+        <!-- Main content -->
+        <div class="content-wrapper">
+
+            <!-- Page header -->
+            <div class="page-header page-header-default">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h3 data-th-text="管理员页面"></h3>
+                    </div>
+
+                    <div class="heading-elements">
+                        <div class="heading-btn-group hidden">
+                            <a href="#" class="btn btn-link btn-float has-text"><i
+                                    class="icon-bars-alt text-primary"></i><span>Statistics</span></a>
+                            <a href="#" class="btn btn-link btn-float has-text"><i
+                                    class="icon-calculator text-primary"></i> <span>Invoices</span></a>
+                            <a href="#" class="btn btn-link btn-float has-text"><i
+                                    class="icon-calendar5 text-primary"></i> <span>Schedule</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="breadcrumb-line">
+                    <ul class="breadcrumb" style="float: left;">
+                        <li class="active"><a href="#"><i class="icon-arrow-right8 position-left"></i>品牌审核</a></li>
+
+                    </ul>
+
+                </div>
+            </div>
+            <!-- /page header -->
+
+            <div class="content">
+                <div class="panel">
+                    <div class="panel-heading"></div>
+                    <div class="panel-body">
+                        <div class="middlebody row ">
+
+                                <div class="pull-right">
+                                    <table class="searchbox1">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <div id="header-wrap" class="header-wrap ">
+                                                    <div class="header-bd" id="look1">
+                                                        <p th:if="${page.totalNumber} != null"
+                                                           th:text="|共${page.totalNumber}条|"></p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="padding-left: 300px">
+                                                <form th:href="@{/brand}" method="post">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="按品牌名模糊搜索"
+                                                               name="title" th:value="${title}" th:id="title"/>
+                                                        <input class="hidden" th:value="${flag}" name="flag" id="flag"/>
+                                                        <input class="hidden" th:value="${num}" name="num" id="num"/>
+                                                        <input  class="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-warning"
+                                                                    th:flag="${flag}" th:num="${num}" th:url="audit"
+                                                                    type="submit">搜索</button>
+                                                        </span>
+                                                    </div><!-- /input-group -->
+                                                </form>
+                                            </td>
+                                            <td style="padding-left: 20px">
+                                                <label style="padding-top: 8px;"><span></span>
+                                                    <select class="btn btn-ms btn-default"  id="num" onchange="numsearch(this,options[selectedIndex].value)" th:flag="${flag}"  style="padding-left: 4px">
+                                                        <option th:text="${num}">选择页数</option>
+                                                        <option value="brand?num=10">10</option>
+                                                        <option value="brand?num=50">50</option>
+                                                        <option value="brand?num=100">100</option>
+                                                        <option value="brand?num=300">300</option>
+                                                        <option value="brand?num=600">600</option>
+                                                    </select>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                           <!-- <form class="righttable col-lg-12 col-xs-12 col-sm-12 col-md-12 " method="get"
+                                  id="mainform" th:action="@{/brand}">-->
+                            <div class="middlebar col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="righttable " align="center">
+                                    <div class="tabtable">
+                                        <ul class="nav nav-tabs" >
+                                            <li th:class="${flag == 1}?'active':''"><a th:href="@{/brand?(flag=1,num=${num})}">未认证</a></li>
+                                            <li th:class="${flag == 2}?'active':''"><a th:href="@{/brand?(flag=2,num=${num})}">已认证</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade " id="tab1"
+                                                 th:class="${flag == 1}?'tab-pane fade in active':'tab-pane fade'">
+                                                <div class="text-left ">
+                                                    <table class="table table-striped table-hover" id="data">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>品牌Logo</th>
+                                                            <th><a th:href="@{/brand?(flag1=(${flag1} != 2)?2:3,num=${num},flag=${flag})}" class="label label-success">品牌名称</a>
+                                                                <i th:class="${flag1} == 2?'icon-arrow-up-right3':'hidden'"></i>
+                                                                <i th:class="${flag1} == 3?'icon-arrow-down-right3':'hidden'"></i>
+                                                            </th>
+                                                            <th>全局可见</th>
+                                                            <th><a th:href="@{/brand?(flag1=(${flag1} != 0)?0:1,num=${num},flag=${flag})}" class="label label-success">提交时间</a>
+                                                                <i th:class="${flag1} == 1?'icon-arrow-up-right3':'hidden'"></i>
+                                                                <i th:class="${flag1} == 0?'icon-arrow-down-right3':'hidden'"></i>
+                                                            </th>
+                                                            <th><a th:href="@{/brand?(flag1=(${flag1} != 8)?8:9,num=${num},flag=${flag})}" class="label label-success">状态</a></th>
+                                                            <th>操作</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>   <!--未审核表格-->
+                                                        <tr th:each="unaudit,unauditStat:${unauditList}" id="unaudit"
+                                                            th:value="${unauditList}">
+                                                            <td>
+                                                                <img src="" id="sellerImg"
+                                                                     class="img-thumbnail btn imgpath"
+                                                                     th:imgpath="${unaudit.sellerLogo}"
+                                                                     th:imgurl="${imgurl.IMGPREFIX}"
+                                                                     th:attr="src=@{${imgurl.IMGPREFIX}+${unaudit.sellerLogo}+${imgurl.IMGSUFIX}}"/>
+                                                            </td>
+                                                            <td th:text="${unaudit.sellerName}">品牌名称</td>
+                                                            <td th:text="${unaudit.visual eq 1}? '不可见':''">是否可见</td>
+                                                            <td th:text="${unaudit.submitTime}">2016-11-25 15:38:48</td>
+                                                            <td th:text="${unaudit.certificationStatus}">认证失败</td>
+                                                            <td><a onclick="pass(this)"  class="label-success label"
+                                                                   th:sellerId="${unaudit.sellerId}" th:text="通过"
+                                                                   id="sellerId">通过</a>
+                                                                <span></span>
+                                                                <a th:cn="${unaudit.sellerName}"
+                                                                   th:class="${unaudit.certificationStatus} == '认证中'?'veto label-danger label':'hidden'"
+                                                                   >否决</a>
+                                                                <!--th:cn="${audit.comanyName}"  th:href="@{/audit/pass?(certificationId=${unaudit.certificationId})}"-->
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                            <div class="tab-pane fade" id="tab2"
+                                                 th:class="${flag == 2}?'tab-pane fade in active':'tab-pane fade'">
+                                                <table class="table table-striped table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>品牌Logo</th>
+                                                        <th><a th:href="@{/brand?(flag1=(${flag1} != 2)?2:3,num=${num},tilte=${title},flag=${flag})}" class="label label-success">品牌名称</a>
+                                                            <i th:class="${flag1} == 2?'icon-arrow-up-right3':'hidden'"></i>
+                                                            <i th:class="${flag1} == 3?'icon-arrow-down-right3':'hidden'"></i>
+                                                        </th>
+                                                        <th>全局可见</th>
+                                                        <th><a th:href="@{/brand?(flag1=(${flag1} != 0)?0:1,num=${num},tilte=${title},flag=${flag})}" class="label label-success">审核时间</a>
+                                                            <i th:class="${flag1} == 1?'icon-arrow-up-right3':'hidden'"></i>
+                                                            <i th:class="${flag1} == 0?'icon-arrow-down-right3':'hidden'"></i>
+                                                        </th>
+                                                        <th>状态</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>  <!--已审核表格-->
+                                                    <tr th:each="audit,auditStat:${auditList}">
+                                                        <td>
+                                                            <img src="" id="sellerImg" class="img-thumbnail btn imgpath"
+                                                                 th:imgpath="${audit.sellerLogo}"
+                                                                 th:imgurl="${imgurl.IMGPREFIX}"
+                                                                 th:attr="src=@{${imgurl.IMGPREFIX}+${audit.sellerLogo}+${imgurl.IMGSUFIX}}"/>
+                                                        </td>
+                                                        <td th:text="${audit.sellerName}">品牌名称</td>
+                                                        <td th:text="${audit.visual eq 1}? '不可见':''">是否可见</td>
+                                                        <td th:text="${audit.certificationTime}">2016-11-25 15:38:48
+                                                        </td>
+                                                        <td th:text="${audit.certificationStatus}">认证失败</td>
+                                                        <td>
+                                                           <!-- <a onclick="change(this)"
+                                                               class="label-success label"
+                                                               th:url="brand"
+                                                               th:id="sellerId"
+                                                               th:certificationId="${audit.sellerId}"
+                                                               th:status="${audit.certificationStatus} == '认证失败'?'认证成功':'认证失败'"
+                                                               th:text="${audit.certificationStatus} == '认证失败'?'通过认证':'否决认证'" >认证</a>
+                                                            <span></span>-->
+                                                            <a onclick="change(this)"
+                                                               th:url="brand"
+                                                               th:id="sellerId"
+                                                               class="label-warning label"
+                                                               th:certificationId="${audit.sellerId}"
+                                                               th:status="认证中"
+                                                               th:text="取消认证" >取消认证</a>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!--楼下分页-->
+                                        <div th:replace="fragments/page :: brand" ></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--</form>-->
+                        </div>
+                    </div>
+
+                </div><!-- panel-body-->
+            </div> <!--panel-->
+
+            <!--页脚-->
+            <div th:replace="fragments/footer :: footer" class="col-lg-12">
+                &copy; 2013 The Static Templates
+            </div>
+        </div><!-- content-->
+
+    </div>
+    <!-- /main content -->
+
+</div>
+<!-- /page content -->
+
+
+
+
+</div>
+<!-- /page container -->
+
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.luosee.user.UserDao">
+
+    <resultMap id="userPay" type="com.luosee.pay.UserPay">
+        <id column="payId" property="payId"></id>
+        <result column="payType" property="payType"></result>
+        <result column="payDate" property="payDate"></result>
+        <result column="validityDate" property="validityDate"></result>
+        <result column="money" property="money"></result>
+        <collection column="userId" property="user" resultMap="tb_user"></collection>
+    </resultMap>
+
+    <resultMap id="tb_user" type="com.luosee.user.TbUser">
+        <id column="userId" property="userId"></id>
+        <result column="username" property="username"></result>
+    </resultMap>
+
+    <resultMap id="childUser" type="com.luosee.user.UserSubAccount">
+        <id column="childId" property="childId"></id>
+        <result column="childUserId" property="childUserId"></result>
+        <result column="parentUserId" property="parentUserId"></result>
+        <result column="remarks" property="remarks"></result>
+        <collection column="userId" property="user" resultMap="tb_user"></collection>
+    </resultMap>
+
+    <select id="findOneByEmail" resultType="com.luosee.user.TbUser" parameterType="java.lang.String">
+        SELECT * from tb_user WHERE username=#{username}
+    </select>
+
+    <insert id="save" parameterType="com.luosee.user.TbUser">
+        INSERT  INTO tb_user(username,password,role,createTime) VALUES(#{username},#{password},#{role},now())
+    </insert>
+
+
+    <insert id="addChildUser" parameterType="com.luosee.user.UserSubAccount">
+          INSERT INTO tb_user_sub_account(childUserId,parentUserId,remarks) VALUES (#{childUserId},#{parentUserId},#{remarks})
+    </insert>
+
+    <delete id="deleteChildAccount" parameterType="java.util.Map">
+        DELETE tb_user_sub_account FROM tb_user_sub_account,tb_user where parentUserId=userId and username=#{username}
+        <foreach collection="childIds" item="child" open="and childId in(" separator="," close=")">
+            #{child}
+        </foreach>
+    </delete>
+
+    <delete id="deleteChild" parameterType="java.util.List">
+        DELETE FROM tb_user where
+        <foreach collection="list" item="child" open=" userId in(" separator="," close=")">
+            #{child}
+        </foreach>
+    </delete>
+
+    <update id="updateChildPassWord"  parameterType="java.util.Map">
+        UPDATE tb_user,tb_user_sub_account
+        SET
+        password = CASE userId
+        <foreach collection="userInfo" item="user" close="END">
+            WHEN #{user.userId} THEN #{user.password}
+        </foreach>
+
+        WHERE parentUserId=#{userId}
+        AND
+        childUserId=userId
+        AND
+        <foreach collection="userInfo" item="user" open="userId in(" separator="," close=")">
+            #{user.userId}
+        </foreach>
+    </update>
+
+    <update id="updataPassword"  parameterType="com.luosee.user.TbUser">
+        UPDATE tb_user SET password=#{password} WHERE  username=#{username}
+    </update>
+
+
+    <update id="updateUserRole" parameterType="com.luosee.user.TbUser">
+        update tb_user SET role=#{role} WHERE  username=#{username}
+    </update>
+
+    <select id="findOne" resultType="com.luosee.user.TbUser" parameterType="long" >
+        SELECT * FROM tb_user WHERE userId=#{userId}
+    </select>
+
+    <update id="updateUserInfo" parameterType="com.luosee.user.TbUser">
+        UPDATE tb_user SET nickname=#{nickname},mobile=#{mobile},email=#{email} WHERE username=#{username}
+    </update>
+
+    <update id="updateSubUserInfo" parameterType="java.util.List">
+        UPDATE tb_user SET grade = CASE username
+        <foreach collection="list" item="user" index="index" close="END">
+            WHEN #{user.username} THEN #{user.grade}
+        </foreach>
+        WHERE
+        <foreach collection="list" item="user" open="username in(" separator="," close=")">
+            #{user.username}
+        </foreach>
+    </update>
+
+    <select id="getUserIdByName" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT userId from tb_user WHERE username=#{copyusername}
+    </select>
+
+    <select id="findChildUser" resultMap="childUser" parameterType="com.luosee.po.Page" >
+        SELECT childId,childUserId,parentUserId,remarks,username,userId FROM tb_user_sub_account
+        INNER JOIN tb_user ON childUserId = userId AND parentUserId=#{querytool}
+        limit #{dbIndex},#{dbNumber}
+    </select>
+
+    <select id="findChildCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+        SELECT count(*) FROM tb_user_sub_account
+        INNER JOIN tb_user ON parentUserId = userId AND username=#{username}
+    </select>
+
+    <select id="findOneChildUser" resultType="com.luosee.user.UserSubAccount" parameterType="java.lang.String" >
+        SELECT childId FROM tb_user_sub_account INNER JOIN tb_user ON childUserId = userId AND username=#{username}
+    </select>
+
+    <select id="findUserLastPay" resultMap="userPay" parameterType="java.lang.String">
+        select payType,payDate,validityDate,money,u.userId userId,payId FROM tb_user_pay up INNER JOIN tb_user u on up.userId=u.userId and u.username=#{username}
+         ORDER BY validityDate DESC LIMIT 1
+    </select>
+
+    <select id="isHasNickName" resultType="java.lang.String" parameterType="com.luosee.user.TbUser">
+        SELECT username FROM tb_user WHERE nickname=#{nickname}
+    </select>
+
+    <select id="isHasUserName" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT username FROM tb_user WHERE username=#{username}
+    </select>
+
+    <select id="queryUserIdPassword" resultType="com.luosee.user.TbUser" parameterType="java.lang.String">
+        SELECT username,salt,userId,password FROM tb_user WHERE username=#{username}
+    </select>
+
+    <select id="queryUserRole" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT role FROM tb_user WHERE username=#{username}
+    </select>
+
+    <select id="findOneParentId" resultType="com.luosee.user.UserSubAccount" parameterType="java.lang.String" >
+        SELECT parentUserId FROM tb_user_sub_account INNER JOIN tb_user ON childUserId = userId AND username=#{username}
+    </select>
+
+    <select id="queryChildsUserId" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT childUserId FROM tb_user_sub_account
+        where childId IN
+        <foreach collection="childIds" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="queryParentUserName" resultType="com.luosee.user.UserSubAccount" parameterType="java.math.BigInteger" >
+         SELECT username FROM tb_user_sub_account INNER JOIN tb_user ON parentUserId=userId
+         WHERE
+         childUserId =#{userId}
+    </select>
+
+    <select id="queryUserGrade" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT grade FROM tb_user WHERE username=#{username}
+    </select>
+</mapper>

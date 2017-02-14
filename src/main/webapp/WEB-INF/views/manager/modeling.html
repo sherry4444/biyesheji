@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sd="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="renderer" content="webkit">
+    <meta name="_csrf" th:attr="content=${_csrf.token}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>窝立方-制作模型</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../../resources/css/manager.css" rel="stylesheet" media="screen" th:href="@{/resources/css/manager.css}"/>
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}"/>
+    <link href="../../../resources/css/fileinput.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/fileinput.min.css}"/>
+    <link href="http://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../../resources/css/pagination.css" rel="stylesheet" media="screen" th:href="@{/resources/css/pagination.css}"/>
+    <div th:replace="fragments/resourceLink :: resourceLink"></div>
+    <link rel="stylesheet" type="text/css" href="../../../resources/css/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="../../../resources/css/jquery.tagsinput.css" />
+    <script type="text/javascript" src="../../../resources/js/jquery.tagsinput.js"></script>
+    <script type='text/javascript' src='../../../resources/js/jquery-ui.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../../../resources/js/jquery-3.1.1.min.js" th:src="@{/resources/js/jquery.min.js}"></script>
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+    <script src="../../../resources/js/modeling.js" th:src="@{/resources/js/modeling.js}"></script>
+    <script src="../../../resources/js/manager.js" th:src="@{/resources/js/manager.js}"></script>
+    <script src="http://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
+    <script src="../../../resources/js/uploadImage.js" th:src="@{/resources/js/uploadImage.js}"></script>
+    <script src="../../../resources/js/ImageFile.js" th:src="@{/resources/js/ImageFile.js}"></script>
+    <script src="../../../resources/js/fileinput.min.js" th:src="@{/resources/js/fileinput.min.js}"></script>
+    <link rel="stylesheet" href="../../../resources/css/model.css"/>
+    <link rel="stylesheet" href="../../../resources/css/brand.css"/>
+    <script src="../../../resources/js/business_model.js"></script>
+    <link rel="stylesheet" href="../../resources/css/select2.min.css" type="text/css" />
+    <script type="text/javascript" src="../../resources/js/select2.min.js"></script>
+<script>
+
+
+
+   /* $(function () {
+
+
+        $('#taginput').change(function(){
+            var t = $("#tagNames");
+            var name =$(this).children('option:selected').val();
+            console.log(name);
+            //$("#tagNames").attr('value', name);
+            if (t.val() == "") {
+                t.val(name);
+            } else {
+                t.val(t.val() + SPEARTER + name);
+            }
+            console.log(document.getElementById("tagNames").value);
+        });
+
+    })*/
+</script>
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse" th:replace="fragments/header :: header">
+    heah
+</div>
+
+<!-- Page container -->
+<div class="page-container">
+
+    <!-- Page content -->
+    <div class="page-content">
+
+        <!-- Main sidebar -->
+        <div class="sidebar sidebar-main">
+            <div th:replace="fragments/leftmanager :: leftmanager"></div>
+        </div>
+        <!-- /main sidebar -->
+
+
+        <!-- Main content -->
+        <div class="content-wrapper">
+
+            <!-- Page header -->
+            <div class="page-header page-header-default">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h3 data-th-text="管理员页面"></h3>
+                    </div>
+
+                    <div class="heading-elements">
+                        <div class="heading-btn-group hidden">
+                            <a href="#" class="btn btn-link btn-float has-text"><i
+                                    class="icon-bars-alt text-primary"></i><span>Statistics</span></a>
+                            <a href="#" class="btn btn-link btn-float has-text"><i
+                                    class="icon-calculator text-primary"></i> <span>Invoices</span></a>
+                            <a href="#" class="btn btn-link btn-float has-text"><i
+                                    class="icon-calendar5 text-primary"></i> <span>Schedule</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="breadcrumb-line">
+                    <ul class="breadcrumb" style="float: left;">
+                        <li class="active"><a href="#"><i class="icon-arrow-right8 position-left"></i>制作模型</a></li>
+                    </ul>
+                    <ul class="breadcrumb-elements">
+                        <li><a onclick="zipDown()"><i class="icon-folder-download "></i>打包下载</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /page header -->
+
+
+            <div class="content">
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">制作模型</h6>
+                        <div class="heading-elements">
+                            <table class="searchbox">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <div id="header-wrap" class="header-wrap ">
+                                            <div class="header-bd" id="look1">
+                                                <p th:if="${page.totalNumber} != null"
+                                                   th:text="|共${page.totalNumber}条|"></p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td style="padding-left: 300px">
+                                        <form th:href="@{/modeling}" method="post">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="按模型名模糊搜索"
+                                                       name="title" th:value="${title}" th:id="title"/>
+                                                <input class="hidden" th:value="${flag}" name="flag" id="flag"/>
+                                                <input class="hidden" th:value="${num}" name="num" id="num"/>
+                                                <input  class="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                                                <span class="input-group-btn">
+                                                            <button class="btn btn-warning"
+                                                                    th:flag="${flag}" th:num="${num}" th:url="audit"
+                                                                    type="submit">搜索</button>
+                                                </span>
+                                            </div><!-- /input-group -->
+                                        </form>
+                                    </td>
+                                    <td th:text="${num}"></td>
+                                    <td style="padding-left: 20px">
+                                        <label style="padding-top: 8px;"><span></span>
+                                            <select class="btn btn-ms btn-default"
+                                                    onchange="numsearch(this,options[selectedIndex].value)"  th:flag="${flag}"
+                                                    style="padding-left: 4px">
+                                                <option>选择每页条数</option>
+                                                <option value="/modeling?num=10" th:selected="${num} eq 10?'selected':''">10</option>
+                                                <option value="/modeling?num=50" th:selected="${num} eq 50?'selected':''">50</option>
+                                                <option value="/modeling?num=100" th:selected="${num} eq 100?'selected':''">100</option>
+                                                <option value="/modeling?num=300" th:selected="${num} eq 300?'selected':''">300</option>
+                                                <option value="/modeling?num=600" th:selected="${num} eq 600?'selected':''">600</option>
+                                            </select>
+                                        </label>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="middlebody row ">
+                            <form class="righttable col-lg-12 col-xs-12 col-sm-12 col-md-12 " method="get"
+                                  id="mainform" th:action="@{/modeling}">
+                                <div class="container-fluid">
+
+                                </div>
+
+                                <div class="middlebar col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                                    <div class="righttable col-lg-12 col-xs-12 col-sm-12 col-md-12 " align="center">
+                                        <div class="tabtable">
+                                            <ul class="nav nav-tabs ">
+                                                <li th:class="${flag == 1}?'active':''"><a th:href="@{/modeling?flag=1}">待制作</a></li>
+                                                <li th:class="${flag == 2}?'active':''"><a th:href="@{/modeling?flag=2}">正在制作</a></li>
+                                                <li th:class="${flag == 3}?'active':''"><a th:href="@{/modeling?flag=3}">完成制作</a></li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade " id="tab1"
+                                                     th:class="${flag == 1}?'tab-pane fade in active':'tab-pane fade'">
+                                                    <div class="text-left ">
+                                                        <table class="table table-striped table-hover" id="data">
+                                                            <thead>
+                                                            <tr>
+                                                                <th><input type="checkbox" id="SelectAll"
+                                                                           onclick="selectAll();"/></th>
+                                                                <th>
+                                                                    <a th:href="@{/modeling?(flag1=(${flag1} != 4)?4:5,num=${num},flag=${flag})}"
+                                                                       class="label label-success">模型ID</a>
+                                                                    <i th:class="${flag1} == 4?'icon-arrow-up-right3':'hidden'"></i>
+                                                                    <i th:class="${flag1} == 5?'icon-arrow-down-right3':'hidden'"></i>
+                                                                </th>
+                                                                <th>
+                                                                    <a th:href="@{/modeling?(flag1=(${flag1} != 2)?2:3,num=${num},flag=${flag})}"
+                                                                       class="label label-success">模型名称</a>
+                                                                    <i th:class="${flag1} == 2?'icon-arrow-up-right3':'hidden'"></i>
+                                                                    <i th:class="${flag1} == 3?'icon-arrow-down-right3':'hidden'"></i>
+                                                                </th>
+                                                                <th>风格</th>
+                                                                <th>分类</th>
+                                                                <th>参考图</th>
+                                                                <th>描述</th>
+                                                                <th>
+                                                                    <a th:href="@{/modeling?(flag1=(${flag1} != 0)?0:1,num=${num},flag=${flag})}"
+                                                                       class="label label-success">提交时间</a>
+                                                                    <i th:class="${flag1} == 1?'icon-arrow-up-right3':'hidden'"></i>
+                                                                    <i th:class="${flag1} == 0?'icon-arrow-down-right3':'hidden'"></i>
+                                                                </th>
+                                                                <th>开始制作</th>
+                                                                <th>打回</th>
+                                                                <th>下载</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>   <!--未审核表格-->
+                                                            <tr th:each="unaudit,unauditStat:${waitToBeDone}"
+                                                                id="unaudit id1" th:value="${unauditList}">
+                                                                <td><input type="checkbox" id="subcheck"
+                                                                           name="subcheck"
+                                                                           th:value="|${unaudit.modelId}${unaudit.modelName},风格：${unaudit.styleName}分类：${unaudit.typeName}描述：${unaudit.description};${unaudit.modelImages}|"/></td>
+                                                                <td th:text="${unaudit.modelId}">模型ID</td>
+                                                                <td th:text="${unaudit.modelName}">模型名称</td>
+                                                                <td th:text="${unaudit.styleName}">风格</td>
+                                                                <td th:text="${unaudit.typeName}">分类</td>
+                                                                <td>
+                                                                    <img src="" id="planImg"
+                                                                         class="img-thumbnail btn imgpath"
+                                                                         th:imgpath="${unaudit.modelImages}"
+                                                                         th:imgurl="${imgurl.IMGPREFIX}"
+                                                                         th:imgsufix="${imgurl.IMGSUFIX}"
+                                                                         th:plantitle="${unaudit.modelImages}"
+                                                                         />
+
+                                                                    <button class="label label-primary  hidden" id="imgpath"
+                                                                            th:imgpath="${unaudit.modelImages}"
+                                                                            th:imgurl="${imgurl.IMGPREFIX}"
+                                                                            th:imgsufix="${imgurl.IMGSUFIX}"
+                                                                            th:plantitle="${unaudit.modelImages}">浏览</button>
+                                                                    <!-- 模态框（Modal） -->
+                                                                    <div class="modal fade" id="myModalimg" tabindex="-1" role="dialog" aria-labelledby="myModalLabelimg" aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                                    <h4 class="modal-title" id="myModalLabelimg"></h4>
+                                                                                </div>
+                                                                                <div class="modal-body" id="imgs" th:text="${imgs}">
+
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                                                </div>
+                                                                            </div><!-- /.modal-content -->
+                                                                        </div><!-- /.modal -->
+                                                                    </div>
+                                                                </td>
+                                                                <td th:text="${unaudit.description}">描述</td>
+                                                                <td th:text="${unaudit.createTime}">2016-11-25
+                                                                    15:38:48
+                                                                </td>
+                                                                <td>
+                                                                    <a onclick="startmaking(this)"
+                                                                       class="label-success label"
+                                                                       th:modelId="${unaudit.modelId}"
+                                                                       th:text="开始制作">开始制作</a>
+                                                                </td>
+                                                                <td>
+                                                                    <a th:cn="${unaudit.modelId}"
+                                                                       class="veto label-warning label"
+                                                                       id="companyNameveto">打回</a>
+                                                                </td>
+                                                                <td>
+                                                                    <a  th:imgpath="|${unaudit.modelId}${unaudit.modelName},风格：${unaudit.styleName}分类：${unaudit.typeName}描述：${unaudit.description};${unaudit.modelImages}|"
+                                                                       class="label-primary label"
+                                                                       id="down" onclick="batchDown(this)">下载</a>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="tab2"
+                                                     th:class="${flag == 2}?'tab-pane fade in active':'tab-pane fade'">
+                                                    <table class="table table-striped table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th><input type="checkbox" id="SelectAll2"
+                                                                       onclick="selectAll2();"/></th>
+                                                            <th>
+                                                                <a th:href="@{/modeling?(flag1=(${flag1} != 4)?4:5,num=${num},flag=${flag})}" class="label label-success">模型ID</a>
+                                                                <i th:class="${flag1} == 4?'icon-arrow-up-right3':'hidden'"></i>
+                                                                <i th:class="${flag1} == 5?'icon-arrow-down-right3':'hidden'"></i>
+                                                            </th>
+                                                            <th>
+                                                                <a th:href="@{/modeling?(flag1=(${flag1} != 2)?2:3,num=${num},flag=${flag})}" class="label label-success">模型名称</a>
+                                                                <i th:class="${flag1} == 2?'icon-arrow-up-right3':'hidden'"></i>
+                                                                <i th:class="${flag1} == 3?'icon-arrow-down-right3':'hidden'"></i>
+                                                            </th>
+                                                            <th>风格</th>
+                                                            <th>分类</th>
+                                                            <th>参考图</th>
+                                                            <th>描述</th>
+                                                            <th>
+                                                                <a th:href="@{/modeling?(flag1=(${flag1} != 0)?0:1,num=${num},flag=${flag})}" class="label label-success">提交时间</a>
+                                                                <i th:class="${flag1} == 1?'icon-arrow-up-right3':'hidden'"></i>
+                                                                <i th:class="${flag1} == 0?'icon-arrow-down-right3':'hidden'"></i>
+                                                            </th>
+                                                            <th>完成制作</th>
+                                                            <th>下载</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr th:each="audit,auditStat:${inMaking}">
+                                                            <td><input type="checkbox" id="subcheck"
+                                                                       name="subcheck"
+                                                                       th:value="|${audit.modelId}${audit.modelName},风格：${audit.styleName}分类：${audit.typeName}描述：${audit.description};${audit.modelImages}|"/></td>
+                                                            <td th:text="${audit.modelId}">模型ID</td>
+                                                            <td th:text="${audit.modelName}">模型名称</td>
+                                                            <td th:text="${audit.styleName}">风格</td>
+                                                            <td th:text="${audit.typeName}">分类</td>
+                                                            <td>
+                                                                <img src="" id="planImg"
+                                                                     class="img-thumbnail btn imgpath"
+                                                                     th:imgpath="${audit.modelImages}"
+                                                                     th:imgurl="${imgurl.IMGPREFIX}"
+                                                                     th:imgsufix="${imgurl.IMGSUFIX}"
+                                                                     th:plantitle="${audit.modelImages}"
+                                                                     />
+
+                                                            </td>
+                                                            <td th:text="${audit.description}" th:id="description" th:name="description" th:value="${audit.description}">描述</td>
+                                                            <td th:text="${audit.createTime}">2016-11-25 15:38:48</td>
+                                                            <td>
+                                                                <a class="label-success label finishmaking"
+                                                                   th:modelId="${audit.modelId}"
+                                                                   th:modelName="${audit.modelName}"
+                                                                   th:description="${audit.description}"
+                                                                   th:text="完成制作">完成制作</a>
+                                                                <!-- 模态框（Modal） -->
+                                                                <div class="modal fade" id="myModal" tabindex="-1"
+                                                                     role="dialog" aria-labelledby="myModalLabel"
+                                                                     aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close"
+                                                                                        data-dismiss="modal"
+                                                                                        aria-hidden="true">&times;</button>
+                                                                                <h4 class="modal-title"
+                                                                                    id="submodelId" ></h4>
+                                                                            </div>
+                                                                            <form id="fillin" enctype="multipart/form-data" method="post" >
+                                                                            <div class="modal-body">
+                                                                                <div class="md-col">
+                                                                                    <label class="control-label col-md-2">名称</label>
+                                                                                    <div class="col-md-10">
+                                                                                        <input class="form-control"
+                                                                                               id="submodelName"
+                                                                                               type="text"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="md-col">
+                                                                                    <label class="control-label col-md-2">描述</label>
+                                                                                    <div class="col-md-10">
+                                                                                        <input class="form-control"
+                                                                                               id="subdescription"
+                                                                                               type="text"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="md-col">
+                                                                                    <label class="control-label col-md-2">风格</label>
+                                                                                    <div class="col-md-10">
+                                                                                        <select name="styleId"
+                                                                                                id="styleId"
+                                                                                                class="form-control">
+                                                                                            <option value="0">全部
+                                                                                            </option>
+                                                                                            <option data-th-each="style,styleIndex:${styleList}"
+                                                                                                    data-th-value="${style.styleId}"
+                                                                                                    data-th-text="${style.styleName}"></option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="md-col">
+                                                                                    <label class="control-label col-md-2">种类</label>
+                                                                                    <div class="col-md-10">
+                                                                                    <select name="typeId" id="typeId" class="form-control">
+                                                                                        <option value="0">全部
+                                                                                        </option>
+                                                                                        <option data-th-each="type,typeIndex:${typeList}" data-th-value="${type.typeId}" data-th-text="${type.typeName}">地面</option>
+                                                                                    </select>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                <div class="md-col">
+                                                                                    <label class="control-label col-md-2">粘附</label>
+                                                                                    <div class="col-md-10">
+                                                                                        <select class="form-control" name="attachType" id="attachType">
+                                                                                            <option value="1">粘附地板</option>
+                                                                                            <option value="2">粘附桌面</option>
+                                                                                            <option value="4">粘附天花板</option>
+                                                                                            <option value="8">粘附墙体</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="md-col">
+                                                                                    <label class="control-label col-md-2">旋转</label>
+                                                                                    <div class="col-md-10">
+                                                                                        <select class="form-control" name="rotateType" id="rotateType">
+                                                                                            <option value="1">可旋转</option>
+                                                                                            <option value="0">不旋转</option>
+                                                                                        </select>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div class="md-col">
+                                                                                    <label class="control-label col-md-2">缩放</label>
+                                                                                    <div class="col-md-3">
+                                                                                        <label class="control-label col-md-3">X</label>
+                                                                                        <select class="form-control" name="scaleX" id="scaleX">
+                                                                                            <option value="0">不缩放</option>
+                                                                                            <option value="1">拉伸</option>
+                                                                                            <option value="2">填充</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <label class="control-label col-md-3">Y</label>
+                                                                                        <select class="form-control" name="scaleY" id="scaleY">
+                                                                                            <option value="0">不缩放</option>
+                                                                                            <option value="1">拉伸</option>
+                                                                                            <option value="2">填充</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <label class="control-label col-md-3">Z</label>
+                                                                                        <select class="form-control" name="scaleZ" id="scaleZ">
+                                                                                            <option value="0">不缩放</option>
+                                                                                            <option value="1">拉伸</option>
+                                                                                            <option value="2">填充</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="md-col">
+                                                                                    <label class="control-label col-md-2">标签</label>
+                                                                                    <div class="col-md-10">
+                                                                                        <select  id="tagsinput" multiple="multiple"class="form-control" >
+                                                                                            <option value="0">添加标签</option>
+                                                                                            <option data-th-each="tag,tagsIndex:${tagsList}" data-th-value="${tag.tagName}" data-th-text="${tag.tagName}" >地面</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                               <!-- <div class="md-col">
+                                                                                    <label class="control-label col-md-2">预览图</label>
+                                                                                        <div class="col-sm-10">
+                                                                                        <img id='previewImg' style='max-width: 200px;max-height: 200px' src/>
+                                                                                        <input type="file" accept="image/*" style="display: none" name="ImgFile" id="uploadImg">
+                                                                                        <button type="button" id='addImg'>上传</button>
+                                                                                    </div>
+                                                                                </div>-->
+                                                                                <div class="md-col">
+                                                                                    <label class="control-label col-md-2">预览图</label>
+                                                                                    <div class="col-md-10">
+                                                                                        <input name="ImgFile" id="ImgFile"  type="file" class="file"/>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div class="md-col" style="padding-bottom: 20px;">
+                                                                                    <label class="control-label col-md-2">文件上传</label>
+                                                                                    <div class="col-md-10">
+                                                                                        <input id="uploadfile" type="file" class="file col-md-5" name="uploadfile"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                                                     <button type="button" class="btn btn-primary" onclick="doUpload()">提交</button>
+                                                                                </div>
+                                                                           </form>
+                                                                        </div><!-- /.modal-content -->
+                                                                    </div><!-- /.modal -->
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <a  th:imgpath="|${audit.modelId}${audit.modelName},风格：${audit.styleName}分类：${audit.typeName}描述：${audit.description};${audit.modelImages}|"
+                                                                   class="label-primary label"
+                                                                    onclick="batchDown(this)">下载</a>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="tab-pane fade" id="tab3"
+                                                     th:class="${flag == 3}?'tab-pane fade in active':'tab-pane fade'">
+                                                    <table class="table table-striped table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th><input type="checkbox" id="SelectAll3"
+                                                                       onclick="selectAll3();"/></th>
+                                                            <th>
+                                                                <a th:href="@{/modeling?(flag1=(${flag1} != 4)?4:5,num=${num},flag=${flag})}"
+                                                                   class="label label-success">模型ID</a>
+                                                                <i th:class="${flag1} == 4?'icon-arrow-up-right3':'hidden'"></i>
+                                                                <i th:class="${flag1} == 5?'icon-arrow-down-right3':'hidden'"></i>
+                                                            </th>
+                                                            <th>
+                                                                <a th:href="@{/modeling?(flag1=(${flag1} != 2)?2:3,num=${num},flag=${flag})}"
+                                                                   class="label label-success">模型名称</a>
+                                                                <i th:class="${flag1} == 2?'icon-arrow-up-right3':'hidden'"></i>
+                                                                <i th:class="${flag1} == 3?'icon-arrow-down-right3':'hidden'"></i>
+                                                            </th>
+                                                            <th>风格</th>
+                                                            <th>分类</th>
+                                                            <th>预览图</th>
+                                                            <th>描述</th>
+                                                            <th>
+                                                                <a th:href="@{/modeling?(flag1=(${flag1} != 0)?0:1,num=${num},flag=${flag})}"
+                                                                   class="label label-success">提交时间</a>
+                                                                <i th:class="${flag1} == 1?'icon-arrow-up-right3':'hidden'"></i>
+                                                                <i th:class="${flag1} == 0?'icon-arrow-down-right3':'hidden'"></i>
+                                                            </th>
+                                                            <th>
+                                                                <a th:href="@{/modeling?(flag1=(${flag1} != 6)?6:7,num=${num},flag=${flag})}"
+                                                                   class="label label-success">完成时间</a>
+                                                                <i th:class="${flag1} == 6?'icon-arrow-up-right3':'hidden'"></i>
+                                                                <i th:class="${flag1} == 7?'icon-arrow-down-right3':'hidden'"></i>
+                                                            </th>
+                                                            <th>
+                                                                <a th:href="@{/modeling?(flag1=(${flag1} != 8)?8:9,num=${num},flag=${flag})}"
+                                                                   class="label label-success">最后修改时间</a>
+                                                                <i th:class="${flag1} == 8?'icon-arrow-up-right3':'hidden'"></i>
+                                                                <i th:class="${flag1} == 9?'icon-arrow-down-right3':'hidden'"></i>
+                                                            </th>
+                                                            <th>上架</th>
+                                                            <th>编辑</th>
+                                                            <th>下载</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>  <!--完成制作表格-->
+                                                        <tr th:each="audit,auditStat:${toComplete}">
+                                                            <td><input type="checkbox" id="subcheck3"
+                                                                       name="subcheck"
+                                                                       th:value="|${audit.modelId}${audit.modelName},风格：${audit.styleName}分类：${audit.typeName}描述：${audit.description};上,${audit.introduceImg};|"/></td>
+                                                            <td th:text="${audit.modelId}">模型ID</td>
+                                                            <td th:text="${audit.modelName}">模型名称</td>
+                                                            <td th:text="${audit.styleName}">风格</td>
+                                                            <td th:text="${audit.typeName}">分类</td>
+                                                            <td>
+                                                                <img src=""
+                                                                     class="img-thumbnail btn introduceImg"
+                                                                     th:imgpath="${audit.introduceImg}"
+                                                                     th:imgurl="${imgurl.IMGPREFIX}"
+                                                                     th:plantitle="${audit.introduceImg}"
+                                                                     th:attr="src=@{${imgurl.IMGPREFIX}+${audit.introduceImg}+${imgurl.IMGSUFIX}}"/>
+
+                                                            </td>
+                                                            <td th:text="${audit.description}">描述</td>
+                                                            <td th:text="${audit.createTime}">2016-11-25 15:38:48</td>
+                                                            <td th:text="${audit.finishMaketime}">2016-11-25 15:38:48
+                                                            </td>
+                                                            <td th:text="${audit.lastReviewTime}">2016-11-25 15:38:48
+                                                            </td>
+                                                            <td>
+                                                                <a class="label-success label" onclick="show(this)" th:modelid3="${audit.modelId}"
+                                                                   th:text="${audit.productStatus}">上架</a>
+                                                                <!-- 模态框（Modal） -->
+                                                                <div class="modal fade" id="change" tabindex="-1" role="dialog" aria-labelledby="putaway" aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                                <h4 class="modal-title" id="putaway">上架</h4>
+                                                                            </div>
+                                                                            <form id="changestatus" enctype="multipart/form-data" method="post">
+                                                                                <div class="modal-body">
+                                                                                    <div class="form-group">
+                                                                                        <label class="radio-inline hidden">
+                                                                                        <input type="text" id="modelid3" name="modelid3">试上架
+                                                                                        </label>
+                                                                                        <label class="radio-inline">
+                                                                                            <input type="radio" value="0" name="productstatus">试上架
+                                                                                        </label>
+                                                                                        <label class="radio-inline">
+                                                                                            <input type="radio" value="1" name="productstatus">正式上架
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                                                <button type="button" class="btn btn-primary" onclick="putaway()" >确定</button>
+                                                                            </div>
+                                                                        </div><!-- /.modal-content -->
+                                                                    </div><!-- /.modal -->
+                                                                </div>
+                                                            </td>
+                                                           <!-- <td th:text="${audit.scaleX}"></td>
+                                                            <td th:text="${audit.scaleY}"></td>
+                                                            <td th:text="${audit.scaleZ}"></td>
+                                                            <td th:text="${audit.scaleType}"></td>-->
+                                                            <td>
+                                                                <a th:class="${audit.productStatus} == '正式上架'? 'hidden':'label-success label edit'"
+                                                                   th:modelId="${audit.modelId}"
+                                                                   th:modelName="${audit.modelName}"
+                                                                   th:description="${audit.description}"
+                                                                   th:styleName="${audit.styleName}"
+                                                                   th:typeName="${audit.typeName}"
+                                                                   th:attachType="${audit.attachType}"
+                                                                   th:rotateType="${audit.rotateType}"
+                                                                   th:scaleX="${audit.scaleX}"
+                                                                   th:scaleY="${audit.scaleY}"
+                                                                   th:scaleZ="${audit.scaleZ}"
+                                                                   th:tagNames="${audit.tagNames}"
+                                                                   th:text="编辑">编辑</a>
+                                                                <!-- 模态框（Modal） -->
+                                                                <div class="modal fade" id="myModaledit" tabindex="-1"
+                                                                     role="dialog" aria-labelledby="myModalLabeledit"
+                                                                     aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close"
+                                                                                        data-dismiss="modal"
+                                                                                        aria-hidden="true">&times;</button>
+                                                                                <h4 class="modal-title"
+                                                                                    id="modelIdedit" ></h4>
+                                                                            </div>
+                                                                            <form  enctype="multipart/form-data" method="post" >
+                                                                                <div class="modal-body">
+                                                                                    <div class="md-col">
+                                                                                        <label class="control-label col-md-2">名称</label>
+                                                                                        <div class="col-md-10">
+                                                                                            <input class="form-control" id="modelNameedit"  type="text" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="md-col">
+                                                                                        <label class="control-label col-md-2">描述</label>
+                                                                                        <div class="col-md-10">
+                                                                                            <input class="form-control" id="descriptionedit"  type="text" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="md-col">
+                                                                                        <label class="control-label col-md-2">风格</label>
+                                                                                        <div class="col-md-10">
+                                                                                            <select name="styleId" id="styleIdedit" class="form-control" >
+                                                                                                <option>全部</option>
+                                                                                                <option data-th-each="style,styleIndex:${styleList}" data-th-value="${style.styleId}" data-th-text="${style.styleName}"></option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="md-col">
+                                                                                        <label class="control-label col-md-2">种类</label>
+                                                                                        <div class="col-md-10">
+                                                                                            <select name="typeId" id="typeIdedit" class="form-control">
+                                                                                                <option>全部</option>
+                                                                                                <option data-th-each="type,typeIndex:${typeList}" data-th-value="${type.typeId}" data-th-text="${type.typeName}">地面</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="md-col">
+                                                                                        <label class="control-label col-md-2">粘附</label>
+                                                                                        <div class="col-md-10">
+                                                                                            <select class="form-control" name="attachType" id="attachTypeedit">
+                                                                                                <option>全部</option>
+                                                                                                <option value="1" >粘附地板</option>
+                                                                                                <option value="2" >粘附桌面</option>
+                                                                                                <option value="4" >粘附天花板</option>
+                                                                                                <option value="8" >粘附墙体</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="md-col">
+                                                                                        <label class="control-label col-md-2">旋转</label>
+                                                                                        <div class="col-md-10">
+                                                                                            <select class="form-control" name="rotateType" id="rotateTypeedit">
+                                                                                                <option>全部</option>
+                                                                                                <option value="1">可旋转</option>
+                                                                                                <option value="0">不旋转</option>
+                                                                                            </select>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                    <div class="md-col">
+                                                                                        <label class="control-label col-md-2">缩放</label>
+                                                                                        <div class="col-md-3">
+                                                                                            <label class="control-label col-md-3">X</label>
+                                                                                            <select class="form-control" name="scaleX" id="scaleXedit">
+                                                                                                <option>全部</option>
+                                                                                                <option value="0">不缩放</option>
+                                                                                                <option value="1">拉伸</option>
+                                                                                                <option value="2">填充</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <label class="control-label col-md-3">Y</label>
+                                                                                            <select class="form-control" name="scaleY" id="scaleYedit">
+                                                                                                <option>全部</option>
+                                                                                                <option value="0">不缩放</option>
+                                                                                                <option value="1">拉伸</option>
+                                                                                                <option value="2">填充</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <label class="control-label col-md-3">Z</label>
+                                                                                            <select class="form-control" name="scaleZ" id="scaleZedit">
+                                                                                                <option>全部</option>
+                                                                                                <option value="0">不缩放</option>
+                                                                                                <option value="1">拉伸</option>
+                                                                                                <option value="2">填充</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="md-col">
+                                                                                        <label class="control-label col-md-2">标签</label>
+                                                                                        <div class="col-md-10" style="border: 1px;">
+                                                                                           <!-- <input type="text" name="tagNames" id="tagNamesedit" class="tags form-control" />
+                                                                                        </div>
+                                                                                        <div class="col-md-4" style="padding-left: 10px;">-->
+                                                                                            <select  multiple="multiple"  id="tagsinputedit" class="form-control">
+                                                                                                <option data-th-each="tag,tagsIndex:${tagsList}" data-th-value="${tag.tagName}" data-th-text="${tag.tagName}" >地面</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- <div class="md-col">
+                                                                                         <label class="control-label col-md-2">预览图</label>
+                                                                                             <div class="col-sm-10">
+                                                                                             <img id='previewImg' style='max-width: 200px;max-height: 200px' src/>
+                                                                                             <input type="file" accept="image/*" style="display: none" name="ImgFile" id="uploadImg">
+                                                                                             <button type="button" id='addImg'>上传</button>
+                                                                                         </div>
+                                                                                     </div>-->
+                                                                                    <div class="md-col">
+                                                                                        <label class="control-label col-md-2">预览图</label>
+                                                                                        <div class="col-md-10">
+                                                                                            <input name="ImgFile" id="ImgFileedit"  type="file" class="file"/>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                    <div class="md-col" style="padding-bottom: 20px;">
+                                                                                        <label class="control-label col-md-2">文件上传</label>
+                                                                                        <div class="col-md-10">
+                                                                                            <input id="uploadfileedit" type="file" class="file col-md-5" th:type="file"/>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                                                        <button type="button" class="btn btn-primary" onclick="doEdit()">提交</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div><!-- /.modal-content -->
+                                                                    </div><!-- /.modal -->
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <a  th:imgpath="|${audit.modelId}${audit.modelName},风格：${audit.styleName}分类：${audit.typeName}描述：${audit.description};上,${audit.introduceImg}|"
+                                                                    class="label-primary label"
+                                                                    onclick="batchDown(this)">下载</a>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!--楼下分页-->
+                                            <div th:replace="fragments/page :: modeling" ></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--页脚-->
+            <div th:replace="fragments/footer :: footer" class="col-lg-12">
+                &copy; 2013 The Static Templates
+            </div>
+        </div><!--content-wrapper-->
+    </div>
+    <!-- /main content -->
+
+
+</div>
+<!-- /page content -->
+
+</div>
+<!-- /page container -->
+
+
+</body>
+</html>

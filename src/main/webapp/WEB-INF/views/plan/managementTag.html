@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>窝立方-标签管理</title>
+    <div th:replace="fragments/resourceLink :: resourceLink"></div>
+    <script th:src="@{/resources/js/ModelAlter.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/datatables_basic.js}" ></script>
+    <script type="text/javascript" th:src="@{/resources/js/datatables.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/resources/js/select2.min.js}" ></script>
+    <script th:src="@{/resources/js/uniform.min.js}"></script>
+    <script th:src="@{/resources/js/login.js}"></script>
+    <script th:src="@{/resources/js/user.plan.js}"></script>
+    <script th:src="@{/resources/js/sign.js}"></script>
+    <link rel="stylesheet" th:href="@{/resources/css/planStyle.css}" />
+
+    <style>
+        .choice-tag
+        {
+            border:1px solid #2196F3;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div class="page-container" style="min-height: 518px;">
+    <div class="page-content">
+        <div th:replace="fragments/left :: userLeftItem">&nbsp;</div>
+        <div class="content-wrapper">
+
+            <div class="page-header page-header-default">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h4>
+                            <a th:href="@{/qualifyPlan}">
+                                <i class="icon-arrow-left52 position-left"></i>
+                            </a>
+                            <span class="text-semibold" >标签管理</span>
+                        </h4>
+                        <a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="content">
+                <div class="panel panel-white r-panel-content">
+                    <div class="panel-body">
+                        <div class="col-md-4">
+                            <div class="panel panel-body border-top-info">
+                                <div class="category-content no-padding">
+                                    <div class="m-title">
+                                        <span>标签组</span>
+                                    </div>
+                                    <ul class="nav nav-tabs nav-tabs-solid nav-tabs-component m-tag">
+                                        <li>
+                                            <a href="#datatable3" data-toggle="tab" class="updateGroup">
+                                                修改标签组名
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#datatable2" data-toggle="tab" class="del-group">
+                                                删除标签组
+                                            </a>
+                                        </li>
+                                        <li class="active">
+                                            <a href="#datatable1" class="addGroup" data-toggle="tab">
+                                                添加标签组
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <ul class="dropdown-menu group-plate" style="display: block; position: static; width: 100%; margin-top: 0; float: none;">
+                                    <li th:each="group,groupIndex:${planTagGroup}"><a class="row-group" th:attr="data-id=${group.groupId},data-name=${group.groupName}"  th:text="${group.groupName}"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="panel panel-body border-top-info tag-plate">
+
+                                <div class="category-content no-padding">
+
+                                    <div class="tabbable">
+                                        <div class="m-title">
+                                            <span>标签</span>
+                                        </div>
+                                        <ul class="nav nav-tabs nav-tabs-solid nav-tabs-component m-tag">
+                                            <li><a href="#datatable6" data-toggle="tab" class="updateTag">修改标签名</a></li>
+                                            <li><a href="#datatable5" data-toggle="tab" class="del-tag">删除标签</a></li>
+                                            <li><a href="#datatable4" data-toggle="tab" class="addTag">添加标签</a></li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+
+                                <ul class="tag-group dropdown-menu" th:attr="data-id=${group.groupId}" th:style="'display:'+${groupIndex.index == 0 ? 'block' : 'none'}+'; position: static; width: 100%; margin-top: 0; float: none;'"  th:each="group,groupIndex:${planTagGroup}">
+                                    <li th:if="${group.groupId eq tag.groupId}" th:each="tag,tagIndex:${planTagList}">
+                                        <a class="row-tag" th:attr="data-id=${tag.tagId},data-name=${tag.tagName}" href="javascript:void(0);" th:text="${tag.tagName}"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
+</body>
+</html>

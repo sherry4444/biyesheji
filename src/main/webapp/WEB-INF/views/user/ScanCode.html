@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>窝立方</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <div th:replace="fragments/resourceLink :: resourceLink"></div>
+    <link rel="stylesheet" th:href="@{/resources/css/userPay.css}" />
+    <script th:src="@{/resources/js/jquery.qrcode.min.js}"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+<div class="pay-body">
+    <div class="pay-info">
+        <div class="pay-info-title">
+            <h2 th:text="'当前账号：'+${#authentication.getName()}"></h2>
+        </div>
+        <div id="output"></div>
+    </div>
+</div>
+<script>
+    $(function () {
+        jQuery('#output').qrcode("[[${result}]]");
+        var query=window.setInterval(function () {
+        	$.ajax({
+        		type:"get",
+        		url:"tradeQuery",
+        		success:function(result)
+        		{
+        			if(result == "success")
+        			{
+        				window.location.href="/paySuccess";
+        			}
+        		}
+        	});
+        },5000);
+    })
+</script>
+</body>
+</html>

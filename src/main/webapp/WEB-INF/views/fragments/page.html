@@ -1,0 +1,167 @@
+<!--楼下分页-->
+<div class="page col-lg-12 col-sm-offset-4" th:fragment="audit" >
+    <div id="pagination">
+        <ul class="pagination pagination-content col-lg-12 col-xs-12 col-sm-12 col-md-12 ">
+            <!--前一页-->
+            <li><a th:if="${page.currentPage} gt 1"
+                   th:href="@{/audit?(currentPage=${page.currentPage-1},flag=${flag},flag1=${flag1},num=${num})}">&laquo;</a>
+            </li>
+            <!--首页-->
+            <li th:class="${page.currentPage le 1} ? 'disabled' : ''">
+                <a th:if="${page.currentPage != 1}"
+                   th:href="@{/audit?(currentPage=1,flag=${flag},flag1=${flag1},num=${num})}">首页</a>
+                <a th:if="${page.currentPage == 1}"
+                   href="javascript:void(0);">首页</a>
+            </li>
+            <!--动态生成中间的页码格子-->
+            <li th:each="pageNo : ${#numbers.sequence(page.currentPage - 3 < 0 ? 0 : page.currentPage - 3, (page.currentPage + 3 > page.totalPage - 3 ? page.totalPage - 1: page.currentPage + 3))}"
+                th:class="${page.currentPage eq (pageNo+1)}? 'active' : ''">
+                <a th:if="${page.currentPage  eq (pageNo+1)}"
+                   href="javascript:void(0);">
+                    <text th:text="${pageNo+1}"></text>
+                </a>
+                <a th:if="${not (page.currentPage eq (pageNo+1))}"
+                   th:href="@{/audit?(currentPage=${pageNo+1},flag=${flag},flag1=${flag1},num=${num})}">
+                    <text th:text="${pageNo+1}"></text>
+                </a>
+            </li>
+            <!--尾页-->
+            <li th:class="${page.currentPage ge page.totalPage} ? 'disabled' : ''">
+                <a th:if="${page.currentPage != page.totalPage}"
+                   th:href="@{/audit?(currentPage=${page.totalPage},flag=${flag},flag1=${flag1},num=${num})}">末页</a>
+                <a th:if="${page.currentPage == page.totalPage}"
+                   href="javascript:void(0);">末页</a>
+            </li><!--下一页-->
+
+            <li><a th:if="${page.currentPage} lt ${page.totalPage}"
+                   th:href="@{/audit?(currentPage=${page.nextPage},flag=${flag},flag1=${flag1},num=${num})}">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="page col-lg-12 col-sm-offset-4" th:fragment="brand" >
+    <div id="pagination">
+        <ul class="pagination pagination-content col-lg-12 col-xs-12 col-sm-12 col-md-12 ">
+            <!--前一页-->
+            <li><a th:if="${page.currentPage} gt 1"
+                   th:href="@{/brand?(currentPage=${page.currentPage-1},flag=${flag},flag1=${flag1},num=${num})}">&laquo;</a>
+            </li>
+            <!--首页-->
+            <li th:class="${page.currentPage le 1} ? 'disabled' : ''">
+                <a th:if="${page.currentPage != 1}"
+                   th:href="@{/brand?(currentPage=1,flag=${flag},flag1=${flag1},num=${num})}">首页</a>
+                <a th:if="${page.currentPage == 1}"
+                   href="javascript:void(0);">首页</a>
+            </li>
+            <!--动态生成中间的页码格子-->
+            <li th:each="pageNo : ${#numbers.sequence(page.currentPage - 3 < 0 ? 0 : page.currentPage - 3, (page.currentPage + 3 > page.totalPage - 3 ? page.totalPage - 1: page.currentPage + 3))}"
+                th:class="${page.currentPage eq (pageNo+1)}? 'active' : ''">
+                <a th:if="${page.currentPage  eq (pageNo+1)}"
+                   href="javascript:void(0);">
+                    <text th:text="${pageNo+1}"></text>
+                </a>
+                <a th:if="${not (page.currentPage eq (pageNo+1))}"
+                   th:href="@{/brand?(currentPage=${pageNo+1},flag=${flag},flag1=${flag1},num=${num})}">
+                    <text th:text="${pageNo+1}"></text>
+                </a>
+            </li>
+            <!--尾页-->
+            <li th:class="${page.currentPage ge page.totalPage} ? 'disabled' : ''">
+                <a th:if="${page.currentPage != page.totalPage}"
+                   th:href="@{/brand?(currentPage=${page.totalPage},flag=${flag},flag1=${flag1},num=${num})}">末页</a>
+                <a th:if="${page.currentPage == page.totalPage}"
+                   href="javascript:void(0);">末页</a>
+            </li><!--下一页-->
+
+            <li><a th:if="${page.currentPage} lt ${page.totalPage}"
+                   th:href="@{/brand?(currentPage=${page.nextPage},flag=${flag},flag1=${flag1},num=${num})}">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="page col-lg-6 col-sm-offset-4" th:fragment="modeling">
+    <div id="pagination">
+        <ul class="pagination pagination-content col-lg-12 col-xs-12 col-sm-12 col-md-12 ">
+            <!--前一页-->
+            <li><a th:if="${page.currentPage} gt 1"
+                   th:href="@{/modeling?(currentPage=${page.currentPage-1},flag=${flag},flag1=${flag1},num=${num})}">&laquo;</a>
+            </li>
+            <!--首页-->
+            <li th:class="${page.currentPage le 1} ? 'disabled' : ''">
+                <a th:if="${page.currentPage != 1}"
+                   th:href="@{/modeling?(currentPage=1,flag=${flag},flag1=${flag1},num=${num})}">首页</a>
+                <a th:if="${page.currentPage == 1}"
+                   href="javascript:void(0);">首页</a>
+            </li>
+            <!--动态生成中间的页码格子-->
+            <li th:each="pageNo : ${#numbers.sequence(page.currentPage - 3 < 0 ? 0 : page.currentPage - 3, (page.currentPage + 3 > page.totalPage - 3 ? page.totalPage - 1: page.currentPage + 3))}"
+                th:class="${page.currentPage eq (pageNo+1)}? 'active' : ''">
+                <a th:if="${page.currentPage  eq (pageNo+1)}"
+                   href="javascript:void(0);">
+                    <text th:text="${pageNo+1}"></text>
+                </a>
+                <a th:if="${not (page.currentPage eq (pageNo+1))}"
+                   th:href="@{/modeling?(currentPage=${pageNo+1},flag=${flag},flag1=${flag1},num=${num})}">
+                    <text th:text="${pageNo+1}"></text>
+                </a>
+            </li>
+            <!--尾页-->
+            <li th:class="${page.currentPage ge page.totalPage} ? 'disabled' : ''">
+                <a th:if="${page.currentPage != page.totalPage}"
+                   th:href="@{/modeling?(currentPage=${page.totalPage},flag=${flag},flag1=${flag1},num=${num})}">末页</a>
+                <a th:if="${page.currentPage == page.totalPage}"
+                   href="javascript:void(0);">末页</a>
+            </li><!--下一页-->
+
+            <li>
+                <a th:if="${page.currentPage} lt ${page.totalPage}"
+                   th:href="@{/modeling?(currentPage=${page.nextPage},flag=${flag},flag1=${flag1},num=${num})}">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!--楼下分页-->
+<div class="page col-lg-12 col-sm-offset-4" th:fragment="productaudit">
+    <div id="pagination">
+        <ul class="pagination pagination-content col-lg-12 col-xs-12 col-sm-12 col-md-12 ">
+            <!--前一页-->
+            <li><a th:if="${page.currentPage} gt 1"productaudit
+                   th:href="@{/productaudit?(currentPage=${page.currentPage-1},flag=${flag},flag1=${flag1},num=${num})}">&laquo;</a>
+            </li>
+            <!--首页-->
+            <li th:class="${page.currentPage le 1} ? 'disabled' : ''">
+                <a th:if="${page.currentPage != 1}"
+                   th:href="@{/productaudit?(currentPage=1,flag=${flag},flag1=${flag1},num=${num})}">首页</a>
+                <a th:if="${page.currentPage == 1}"
+                   href="javascript:void(0);">首页</a>
+            </li>
+            <!--动态生成中间的页码格子-->
+            <li th:each="pageNo : ${#numbers.sequence(page.currentPage - 3 < 0 ? 0 : page.currentPage - 3, (page.currentPage + 3 > page.totalPage - 3 ? page.totalPage - 1: page.currentPage + 3))}"
+                th:class="${page.currentPage eq (pageNo+1)}? 'active' : ''">
+                <a th:if="${page.currentPage  eq (pageNo+1)}"
+                   href="javascript:void(0);">
+                    <text th:text="${pageNo+1}"></text>
+                </a>
+                <a th:if="${not (page.currentPage eq (pageNo+1))}"
+                   th:href="@{/productaudit?(currentPage=${pageNo+1},flag=${flag},flag1=${flag1},num=${num})}">
+                    <text th:text="${pageNo+1}"></text>
+                </a>
+            </li>
+            <!--尾页-->
+            <li th:class="${page.currentPage ge page.totalPage} ? 'disabled' : ''">
+                <a th:if="${page.currentPage != page.totalPage}"
+                   th:href="@{/productaudit?(currentPage=${page.totalPage},flag=${flag},flag1=${flag1},num=${num})}">末页</a>
+                <a th:if="${page.currentPage == page.totalPage}"
+                   href="javascript:void(0);">末页</a>
+            </li><!--下一页-->
+
+            <li><a th:if="${page.currentPage} lt ${page.totalPage}"
+                   th:href="@{/productaudit?(currentPage=${page.nextPage},flag=${flag},flag1=${flag1},num=${num})}">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+</div>

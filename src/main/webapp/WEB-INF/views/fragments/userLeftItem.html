@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../../../resources/css/facilityItem.css" rel="stylesheet" >
+    <script src="../../../resources/js/jquery-3.1.1.min.js"></script>
+    <script src="../../../resources/js/facility.js"></script>
+</head>
+<body>
+    <div class="facility-body" th:fragment="userLeftItem">
+        <ul>
+            <li>
+                <div>
+                    <span class="glyphicon glyphicon-user"></span>
+                    账号管理
+                    <i class="glyphicon glyphicon-chevron-up"></i>
+                </div>
+                <ol>
+                    <li><a th:href="@{/qualifyUserInfo}">我的账号</a></li>
+                    <li><a th:href="@{/toretrievePage}">重设密码</a></li>
+                    <li sec:authorize="hasAnyRole('ROLE_SELLER')"><a th:href="@{/qualifyCertification}">认证审核</a></li>
+                </ol>
+            </li>
+            <li sec:authorize="hasAnyRole('ROLE_SELLER')">
+                <div>
+                    <span class="glyphicon glyphicon-registration-mark"></span>
+                    品牌管理
+                    <i class="glyphicon glyphicon-chevron-up"></i>
+                </div>
+                <ol>
+                    <li><a th:href="@{/qualifyBrand}">品牌列表</a></li>
+                </ol>
+            </li>
+            <li>
+                <div>
+                    <span class="glyphicon glyphicon-list-alt"></span>
+                    方案管理
+                    <i class="glyphicon glyphicon-chevron-up"></i>
+                </div>
+                <ol>
+                    <li><a th:href="@{/qualifyPlan}">方案列表</a></li>
+                    <li><a th:href="@{/choiceCad}">cad导入</a></li>
+                </ol>
+            </li>
+            <li sec:authorize="hasAnyRole('ROLE_SELLER')">
+                <div>
+                    <span class="glyphicon glyphicon-th-large"></span>
+                    商品管理
+                    <i class="glyphicon glyphicon-chevron-up"></i>
+                </div>
+                <ol>
+                    <li><a th:href="@{/qualifyProduct}">商品列表</a></li>
+                    <li><a th:href="@{/qualifyModel}">模型列表</a></li>
+                    <li><a th:href="@{/addModel}">制作模型</a></li>
+                </ol>
+            </li>
+            <li>
+                <div>
+                    <span class="glyphicon glyphicon-record"></span>
+                    推荐位展示
+                    <i class="glyphicon glyphicon-chevron-up"></i>
+                </div>
+                <ol>
+                    <li>推荐位设置</li>
+                    <li>统计</li>
+                </ol>
+            </li>
+            <li>
+                <div>
+                    <span class="glyphicon glyphicon-usd"></span>
+                    财务
+                    <i class="glyphicon glyphicon-chevron-up"></i>
+                </div>
+                <ol>
+                    <li>我的余额</li>
+                    <li>充值/提现</li>
+                    <li>发票</li>
+                </ol>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

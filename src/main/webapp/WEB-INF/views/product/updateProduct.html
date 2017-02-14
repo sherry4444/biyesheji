@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>窝立方-商品修改</title>
+    <div th:replace="fragments/resourceLink :: resourceLink"></div>
+    <link rel="stylesheet" th:href="@{/resources/css/brand.css}" />
+    <link rel="stylesheet" th:href="@{/resources/css/model.css}" />
+    <script th:src="@{/resources/js/business_model.js}"></script>
+    <script th:src="@{/resources/js/ModelAlter.js}"></script>
+    <script th:src="@{/resources/js/uploadImage.js}"></script>
+    <script th:src="@{/resources/js/product.js}"></script>
+    <link rel="stylesheet" th:href="@{/resources/css/product.css}" />
+    <script th:src="@{/resources/js/ImageFile.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/datatables_basic.js}" ></script>
+    <script type="text/javascript" th:src="@{/resources/js/datatables.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/resources/js/select2.min.js}" ></script>
+    <script th:src="@{/resources/js/pages/form_layouts.js}"></script>
+    <script th:src="@{/resources/js/uniform.min.js}"></script>
+    <script th:src="@{/resources/js/login.js}"></script>
+    <link rel="stylesheet" th:href="@{/resources/css/planStyle.css}" />
+    <script type="text/javascript" th:src="@{/resources/js/sign.js}"></script>
+    <style>
+    .select2, .select2 span
+    {
+        width: 100%!important;
+    }
+    .select2,.r-info
+    {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .demo-color img
+    {
+        width: 250px;
+        height:150px;
+    }
+</style>
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div class="page-container" style="min-height: 518px;">
+    <div class="page-content">
+        <div th:replace="fragments/left :: userLeftItem">&nbsp;</div>
+        <div class="content-wrapper">
+            <div class="page-header page-header-default">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h4>
+                            <i class="icon-arrow-left52 position-left"></i>
+                            <span class="text-semibold" >修改商品</span>
+                        </h4>
+                        <a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="content">
+                <div class="panel panel-white r-panel-content">
+                    <div class="panel-body">
+                        <form th:if="${product != null}" class="product-form" data-th-action="@{/updateProduct}+'?_csrf='+${_csrf.token}" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="token" th:value="${session.token}">
+                            <fieldset class="step ui-formwizard-content" style="display: block;">
+                                <h6 class="form-wizard-title text-semibold">
+                                    商品信息
+                                    <small class="display-block">请填写商品信息</small>
+                                    <span class="help_block">注意：添加商品前请先添加品牌</span>
+                                </h6>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>商品类型:</label>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label>
+                                                        <input type="radio" name="productType" class="choice-producttype" data-th-attr="checked=${product.productType == false ? true:false}" value="0" data-product-type="0">模型
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="productType" class="choice-producttype" data-th-attr="checked=${product.productType == true ? true:false}" value="1" data-product-type="1">图片
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>商品名:</label>
+                                            <input type="text" name="productName" class="form-control ui-wizard-content" data-th-value="${product.productName}">
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>上架:</label>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <input type="checkbox" class="styled"  name="Selling"  data-th-checked="${product.Selling eq true?'checked':false}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>风格:</label>
+                                            <div class="row">
+                                                <select name="styleId" class="style-item select ui-wizard-content select2-hidden-accessible" >
+                                                    <option data-th-each="style,styleIndex:${styleList}" data-th-selected="${product.style != null && style.styleName == product.style.styleName?'selected':''}" data-th-value="${style.styleId}" data-th-text="${style.styleName}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>种类:</label>
+                                            <div class="row">
+                                                <select name="typeId" class="type-item select ui-wizard-content select2-hidden-accessible" >
+                                                    <option data-th-each="type,typeIndex:${typeList}" data-th-selected="${product.type != null && type.typeName == product.type.typeName?'selected':''}"  data-th-value="${type.typeId}" data-th-text="${type.typeName}">地面</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>品牌:</label>
+                                            <div class="row">
+                                                <select name="sellerId" class="style-item select ui-wizard-content select2-hidden-accessible" >
+                                                    <option data-th-each="seller,sellertagIndex:${sellerList}" data-th-selected="${seller.sellerName == product.seller.sellerName?'selected':''}"  data-th-value="${seller.sellerId}" data-th-text="${seller.sellerName}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>标签:</label>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <input type="text" name="tagNames" class="form-control ui-wizard-content" data-th-value="${product.tagNames}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <select name="tagId" class="select ui-wizard-content select2-hidden-accessible">
+                                                        <option data-th-each="tag,tagIndex:${tagList}" data-th-selected="${ product.tagmap != null &&  product.tagmap.tag != null && tag.tagName == product.tagmap.tag.tagName?'selected':''}" data-th-value="${tag.tagId}" data-th-text="${tag.tagName}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="form-group r-info">
+                                        <label>商品描述:</label>
+                                        <textarea name="description" rows="5" cols="5" class="form-control" data-th-text="${product.description}"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group r-info">
+                                        <label>款式:</label>
+                                        <div class="row productDiagram">
+                                            <div data-th-each="productStyle,productStyleIndex:${productStyleList}"
+                                                 data-th-class="|col-sm-4 col-lg-2 product-style-p${productStyleIndex.index}|">
+                                                <div>
+                                                    <div class="bg-primary-800 demo-color model-i">
+                                                        <img data-th-src="|http://cdn-test.dodojia.cn/${productStyle.normalPic}?x-oss-process=style/product-normal|"/>
+                                                        <div class="up-btn del-model-btn">
+                                                            <a href="javascript:void(0);" class="del-p-style" th:attr="data-index=${productStyleIndex.index}">
+                                                                <i class="icon-bin"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="p-15">
+                                                        <div class="media-body">
+                                                            <span data-th-class="|product-style-item${productStyleIndex.index}|"  data-th-attr="data-index=${productStyleIndex.index}">
+                                                                <strong th:text="${productStyle.styleName}"></strong>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4 col-lg-2 addProductStyle">
+                                                <div>
+                                                    <div class="bg-primary-800 demo-color">
+                                                        <img th:src="@{/resources/images/brand.jpg}"/>
+                                                    </div>
+
+                                                    <div class="p-15">
+                                                        <div class="media-body">
+                                                            <span>
+                                                                <strong>添加款式</strong>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group r-info">
+                                        <label>介绍套图:</label>
+                                        <div class="row">
+                                            <input type="hidden" data-th-value="${product.introduceImg}" name="introduceImg" >
+                                            <div class="col-sm-4 col-lg-2" data-th-each="img,imgindex:${#strings.listSplit(product.introduceImg,',')}">
+                                                <div>
+                                                    <div class="bg-primary-800 demo-color model-i">
+                                                        <input type="hidden" data-th-value="${img}" name="txtIntroduceImg" >
+                                                        <img data-th-src="|http://cdn-test.dodojia.cn/${img}?x-oss-process=style/product-normal|"/>
+                                                        <div class="up-btn del-model-btn">
+                                                            <a href="javascript:void(0);" class="del-p-introduce">
+                                                                <i class="icon-bin"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="p-15">
+                                                        <div class="media-body">
+                                                            <span>
+                                                                <strong></strong>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4 col-lg-2 introduceImg">
+                                                <div>
+                                                    <div class="bg-primary-800 demo-color">
+                                                        <img th:src="@{/resources/images/brand.jpg}"/>
+                                                    </div>
+
+                                                    <div class="p-15">
+                                                        <div class="media-body">
+                                                            <span>
+                                                                <strong>添加套图</strong>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <script type="text/javascript">
+                                var p_type=[[${product.productType}]];
+                                ;(function ($) {
+                                    $(function () {
+                                        starProductDiv();
+                                    });
+
+                                    function starProductDiv() {
+                                        for(var i=0;i<productStyleDiv;i++)
+                                        {
+                                            product_stack.productStyle_stack(i);
+                                            product_stack.addmodel(i);
+                                            product_stack.styleSub(i);
+                                            product_stack.addStyleImg(i);
+                                            product_stack.delete_p_style();
+                                            product_stack.setDefault();
+                                        }
+                                    }
+                                })(jQuery);
+                            </script>
+                            <div data-th-each="productStyle,productStyleIndex:${productStyleList}" data-th-class="|product-style style-div${productStyleIndex.index}|" style="display: none;">
+
+                                <script type="text/javascript">
+                                    productStyleDiv++;
+                                </script>
+                                <fieldset class="step ui-formwizard-content" id="step1" style="display: block;">
+                                    <h6 class="form-wizard-title text-semibold">
+                                        款式信息
+                                        <small class="display-block">请填写款式信息</small>
+                                    </h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>款式名:
+                                                    <span class="text-danger">*</span>
+                                                    <a data-th-attr="data-index=${productStyleIndex.index}" class="setDefault" href="javascript:void(0);" data-th-text="${productStyle.Default == true ? '默认款式' :'设置默认款式'}">默认款式</a>
+
+                                                    <input id="default" th:if="${productStyle.Default == true}" th:name="|productStyleList[${productStyleIndex.index}].Default|" type="hidden" value="1">
+                                                </label>
+                                                <input data-th-value="${productStyle.styleId}" type="hidden" data-th-name="|productStyleList[${productStyleIndex.index}].styleId|">
+                                                <input data-th-value="${productStyle.styleName}" data-th-name="|productStyleList[${productStyleIndex.index}].styleName|" class="styleName form-control ui-wizard-content">
+                                                <input data-th-value="${product.productId}" data-th-name="|productStyleList[${productStyleIndex.index}].productId|" class="styleName form-control ui-wizard-content">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>价格:</label>
+                                                <input type="text" data-th-value="${productStyle.price}" data-th-name="|productStyleList[${productStyleIndex.index}].price|" class="form-control ui-wizard-content">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6"> <label>大小:</label>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input type="text"data-th-value="${productStyle.length}" data-th-name="|productStyleList[${productStyleIndex.index}].length|" class="form-control ui-wizard-content" placeholder="长度">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input type="text" data-th-value="${productStyle.width}" data-th-name="|productStyleList[${productStyleIndex.index}].width|"  class="form-control ui-wizard-content" placeholder="宽度">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input type="text" data-th-value="${productStyle.height}" data-th-name="|productStyleList[${productStyleIndex.index}].height|" class="form-control ui-wizard-content" placeholder="高度">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>网址:</label>
+                                                <input type="text" data-th-value="${productStyle.shoppingUrl}" data-th-name="|productStyleList[${productStyleIndex.index}].shoppingUrl|" class="form-control ui-wizard-content">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" th:if="${product.productType == false}">
+                                        <div class="form-group r-info"> <label>模型:</label>
+                                            <div class="row">
+                                                <div th:attr="data-index=${productStyleIndex.index}" th:class="|col-sm-4 col-lg-2 addproductModel${productStyleIndex.index}|">
+                                                    <div class="col-sm-4 col-lg-2" style="min-width: 250px;margin-right: 5px">
+                                                        <div>
+                                                            <div class="bg-primary-800 demo-color">
+                                                                <img th:if="${productStyle.model != null}" th:src="${'http://cdn-test.dodojia.cn/'+#strings.listSplit(#strings.listSplit(productStyle.model.modelImages,';')[0],',')[1]+'?x-oss-process=style/product-normal'}">
+                                                                <img th:if="${productStyle.model == null}" th:src="@{resources/images/brand.jpg}">
+                                                                <label>蒙娜丽莎床垫</label>
+                                                                <input type="hidden" th:value="${productStyle.modelId}" th:name="|productStyleList[${productStyleIndex.index}].modelId|">
+                                                            </div>
+                                                            <div class="p-15">
+                                                                <div class="media-body">
+                                                                    <span><strong>添加模型</strong></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div th:class="|row thumbnail${productStyleIndex.index}|">
+                                        <div class="form-group r-info">
+                                            <label>略缩图:</label>
+                                            <div class="row modelDiagram">
+                                                <div th:class="|col-sm-4 col-lg-2 addStyleImage${productStyleIndex.index}|">
+                                                    <div>
+                                                        <div class="bg-primary-800 demo-color">
+                                                            <img data-th-src="|http://cdn-test.dodojia.cn/${productStyle.normalPic}?x-oss-process=style/product-normal|">
+                                                        </div>
+                                                        <div class="p-15">
+                                                            <div class="media-body">
+                                                                <span>
+                                                                    <strong>添加略缩图</strong>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <input type='hidden' th:value="${productStyle.normalPic}" th:name="|productStyleList[${productStyleIndex.index}].normalPic|">
+                                                <input type='file' accept="image/*" data-th-name="|productStyleImg[${productStyleIndex.index}]|" style='display: none' />
+                                                <div style='color:red'></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="md-col">
+                                        <button type="button" data-th-attr="data-index=${productStyleIndex.index}" data-th-class="|btn btn-info ui-wizard-content ui-formwizard-button style-sub${productStyleIndex.index}|">确定</button>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="form-wizard-actions">
+                                <button class="btn btn-info ui-wizard-content ui-formwizard-button" value="确认添加" type="button" id="product_sub">确认添加</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+
+	<link href="../../../resources/css/styles.css" rel="stylesheet" type="text/css">
+	<link href="../../../resources/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="../../../resources/css/core.css" rel="stylesheet" type="text/css">
+	<link href="../../../resources/css/components.css" rel="stylesheet" type="text/css">
+	<link href="../../../resources/css/colors.css" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="../../../resources/js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../resources/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../../resources/js/app.js"></script>
+</head>
+
+<body>
+
+	<!-- Main navbar -->
+	<div class="navbar navbar-inverse">
+		<div class="navbar-header">
+
+
+			<ul class="nav navbar-nav visible-xs-block">
+				<li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+			</ul>
+		</div>
+
+		<div class="navbar-collapse collapse" id="navbar-mobile">
+			<ul class="nav navbar-nav">
+				<li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
+			</ul>
+
+
+			<div class="navbar-right">
+				<ul class="nav navbar-nav">
+
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- /main navbar -->
+
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main sidebar -->
+			<div class="sidebar sidebar-main">
+				<div class="sidebar-content">
+
+					<!-- User menu -->
+					<div class="sidebar-user">
+						<div class="category-content">
+							<div class="media">
+								<a href="#" class="media-left"><img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></a>
+								<div class="media-body">
+									<span class="media-heading text-semibold">Victoria Baker</span>
+									<div class="text-size-mini text-muted">
+										<i class="icon-pin text-size-small"></i> &nbsp;Santa Ana, CA
+									</div>
+								</div>
+
+								<div class="media-right media-middle">
+									<ul class="icons-list">
+										<li>
+											<a href="#user-nav" data-toggle="collapse" class="legitRipple"><i class="caret"></i></a>
+										</li>
+									</ul>
+								</div>
+								<div class="navigation-wrapper collapse" id="user-nav" aria-expanded="true">
+									<ul class="navigation">
+										<li><a href="#" class="legitRipple"><i class="icon-user-plus"></i> <span>我的余额</span></a></li>
+										<li><a href="#" class="legitRipple"><i class="icon-coins"></i> <span>我的信息</span></a></li>
+										<li><a href="#" class="legitRipple"><i class="icon-comment-discussion"></i> <span><span class="badge bg-teal-400 pull-right">58</span>消息</span></a></li>
+										<li><a href="#" class="legitRipple"><i class="icon-cog5"></i> <span>充值/提现</span></a></li>
+										<li><a href="/logout" th:href="@{#}" onclick="$('#form').submit();"><i class="icon-switch2"></i> <span>登出</span></a>
+											<form style="visibility: hidden" id="form" method="post" action="#" th:action="@{/logout}"></form></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /user menu -->
+
+
+					<!-- Main navigation -->
+					<div class="sidebar-category sidebar-category-visible">
+						<div class="category-content no-padding">
+							<ul class="navigation navigation-main navigation-accordion">
+
+								<!-- Main -->
+								<li class="navigation-header"><span>管理</span> <i class="icon-menu" title="Main pages"></i></li>
+								<li><a href="index.html"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+								<li>
+									<a href="#"><i class="icon-stack2"></i> <span>审核</span></a>
+									<ul>
+										<li><a th:herf="">资质审核</a></li>
+										<li><a href="layout_navbar_sidebar_fixed.html">品牌审核</a></li>
+										<li><a href="layout_sidebar_fixed_native.html">商品审核</a></li>
+										<li><a href="layout_navbar_hideable.html">模型审核</a></li>
+									</ul>
+								</li>
+								<li>
+									<a href="#"><i class="icon-copy"></i> <span>用户列表</span></a>
+									<ul>
+										<li><a href="layout_navbar_fixed.html">模型列表</a></li>
+										<li><a href="layout_navbar_sidebar_fixed.html">制作模型</a></li>
+									</ul>
+								</li>
+								<li>
+									<a href="#"><i class="icon-stack"></i> <span>用户管理</span></a>
+									<ul>
+										<li><a href="starters/horizontal_nav.html">用户列表</a></li>
+										<li><a href="starters/1_col.html">方案列表</a></li>
+									</ul>
+								</li>
+								<li>
+									<a href="changelog.html"><i class="icon-list-unordered"></i> <span>商品管理</a>
+									<ul>
+										<li><a href="layout_navbar_fixed.html">商品列表</a></li>
+										<li><a href="layout_navbar_sidebar_fixed.html">推荐位展示</a></li>
+										<li><a href="layout_navbar_sidebar_fixed.html">推荐位列表</a></li>
+
+									</ul>
+								</li>
+								<li><a href="../../RTL/index.html">统计</a></li>
+								<!-- /main -->
+
+							</ul>
+						</div>
+					</div>
+					<!-- /main navigation -->
+
+				</div>
+			</div>
+			<!-- /main sidebar -->
+
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+
+				<!-- Page header -->
+				<div class="page-header page-header-default">
+					<div class="page-header-content">
+						<div class="page-title">
+							<h4><span class="text-semibold">Alpaca</span> - Advanced Inputs</h4>
+						</div>
+
+						<div class="heading-elements">
+							<div class="heading-btn-group">
+								<a href="#" class="btn btn-link btn-float has-text"><i class="icon-bars-alt text-primary"></i><span>Statistics</span></a>
+								<a href="#" class="btn btn-link btn-float has-text"><i class="icon-calculator text-primary"></i> <span>Invoices</span></a>
+								<a href="#" class="btn btn-link btn-float has-text"><i class="icon-calendar5 text-primary"></i> <span>Schedule</span></a>
+							</div>
+						</div>
+					</div>
+
+					<div class="breadcrumb-line">
+						<ul class="breadcrumb">
+							<li><a href="index.html"><i class="icon-home2 position-left"></i> Home</a></li>
+							<li><a href="alpaca_advanced.html">Alpaca</a></li>
+							<li class="active">Advanced inputs</li>
+						</ul>
+
+						<ul class="breadcrumb-elements">
+							<li><a href="#"><i class="icon-comment-discussion position-left"></i> Support</a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									<i class="icon-gear position-left"></i>
+									Settings
+									<span class="caret"></span>
+								</a>
+
+								<ul class="dropdown-menu dropdown-menu-right">
+									<li><a href="#"><i class="icon-user-lock"></i> Account security</a></li>
+									<li><a href="#"><i class="icon-statistics"></i> Analytics</a></li>
+									<li><a href="#"><i class="icon-accessibility"></i> Accessibility</a></li>
+									<li class="divider"></li>
+									<li><a href="#"><i class="icon-gear"></i> All settings</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- /page header -->
+
+
+			<div class="content">
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="panel panel-flat">
+							<div class="panel-heading">
+								<h6 class="panel-title">Option tree field</h6>
+								<div class="heading-elements">
+									<ul class="icons-list">
+										<li><a data-action="collapse"></a></li>
+										<li><a data-action="reload"></a></li>
+										<li><a data-action="close"></a></li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="panel-body">
+						内容
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+	</div>
+	<!-- /page container -->
+
+</body>
+</html>

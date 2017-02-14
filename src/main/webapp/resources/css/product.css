@@ -1,0 +1,55 @@
+.product-form
+{
+    position: relative;
+}
+.product-style
+{
+    position: absolute;
+    left:0;
+    top:0;
+    z-index: 10;
+    background-color: #ffffff;
+}
+.dropdown select
+{
+    height: 34px;
+    margin: 7px;
+    box-sizing: border-box;
+}
+.product-tag
+{
+    height:27px;
+    box-sizing: border-box;
+    margin-left: 10px;
+}
+.txt-val
+{
+    width: 100%;
+    min-height: 200px;
+}
+.q-field
+{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    text-align: left;
+    display: none;
+    position: absolute;
+    left:0;
+    top:28px;
+    z-index: 10;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #DDDDDD;
+    border-left:1px solid #DDDDDD;
+    border-right:1px solid #DDDDDD;
+    width: 100%;
+    padding-left: 12px;
+}
+.field_s
+{
+    position: relative;
+}
+.field_s:hover .q-field
+{
+    display: block;
+}

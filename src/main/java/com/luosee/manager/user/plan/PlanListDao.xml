@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luosee.manager.user.plan.PlanListDao">
+
+    <!--private Integer planId;//用户id-->
+    <!--private String title;//方案名-->
+    <!--private String username;//用户-->
+    <!--private Timestamp createTime;//创建时间-->
+    <!--private Timestamp lastModifiedTime;//最后更新时间-->
+    <!--private String imagePath;//预览图-->
+    <!--private  Integer isPublic;//是否公开-->
+    <!--private String downloadU3DUrl;//方案下载地址-->
+    <!--private Integer floorPlanId;//户型ID-->
+    <!--private String floorPlanUrl;//户型下载地址-->
+
+    <resultMap type="com.luosee.manager.user.plan.PlanList" id="planListResultMap">
+        <id property="planId" column="planId" />
+        <result property="title" column="title" />
+        <result property="userId" column="userId" />
+        <result property="username" column="username" />
+        <result property="createTime" column="createTime" />
+        <result property="imagePath" column="imagePath" />
+        <result property="isPublic" column=" isPublic" />
+        <result property="downloadU3DUrl" column="downloadU3DUrl" />
+        <result property="floorPlanId" column="floorPlanId" />
+        <result property="floorPlanUrl" column="floorPlanUrl" />
+        <result property="nickname" column="nickname" />
+    </resultMap>
+
+
+
+
+    <select id="selectAll"  resultMap="planListResultMap" parameterType="java.util.Map">
+        SELECT a.userId,a.planId,a.title,b.username,a.createTime,a.lastModifiedTime,a.imagePath,a.isPublic,b.nickname
+        from tb_my_plans a left join tb_user b
+        on a.userId = b.userId
+        <where>
+            <if test="title != null">
+                and a.planId like '%${title}%'
+            </if>
+            <if test="title != null">
+                or b.username LIKE '%${title}%'
+            </if>
+            <if test="title != null">
+                or a.title LIKE '%${title}%'
+            </if>
+            <if test="title != null">
+                or a.userId LIKE '%${title}%'
+            </if>
+            <if test="title!= null">
+                AND b.username = #{title}
+            </if>
+            <if test="title != null">
+                or b.nickname LIKE '%${title}%'
+            </if>
+        </where>
+        <if test="flag == '8'.toString()">
+            ORDER BY a.planId ASC
+        </if>
+        <if test="flag == '9'.toString()">
+            ORDER BY a.planId DESC
+        </if>
+        <if test="flag == '2'.toString()">
+            ORDER BY a.title ASC
+        </if>
+        <if test="flag == '3'.toString()">
+            ORDER BY a.title DESC
+        </if>
+        <if test="flag == '4'.toString()">
+            ORDER BY b.username ASC
+        </if>
+        <if test="flag == '5'.toString()">
+            ORDER BY b.username DESC
+        </if>
+        <if test="flag == '6'.toString()">
+            ORDER BY a.createTime ASC
+        </if>
+        <if test="flag == '7'.toString()">
+            ORDER BY a.createTime DESC
+        </if>
+        <if test="flag == '0'.toString()">
+            ORDER BY a.lastModifiedTime DESC
+        </if>
+        <if test="flag == '1'.toString()">
+            ORDER BY a.lastModifiedTime ASC
+        </if>
+        <if test="flag == '10'.toString()">
+            ORDER BY a.isPublic ASC
+        </if>
+        <if test="flag == '11'.toString()">
+            ORDER BY a.isPublic DESC
+        </if>
+        limit #{page.dbIndex},#{page.dbNumber}
+    </select>
+
+    <select id="count"  parameterType="String" resultType="int">
+        select count(*)
+        from tb_my_plans a left join tb_user b
+        on a.userId = b.userId
+        <where>
+            <if test="title != null">
+                and a.planId like '%${title}%'
+            </if>
+            <if test="title != null">
+                or b.username LIKE '%${title}%'
+            </if>
+            <if test="title != null">
+                or a.title LIKE '%${title}%'
+            </if>
+            <if test="title != null">
+                or a.userId LIKE '%${title}%'
+            </if>
+            <if test="title!= null">
+                AND b.username = #{title}
+            </if>
+            <if test="title != null">
+                or b.nickname LIKE '%${title}%'
+            </if>
+        </where>
+    </select>
+
+    <select id="selectToCopy" resultMap="planListResultMap" parameterType="java.util.Map">
+        SELECT a.title,a.imagePath,a.downloadU3DUrl,a.floorPlanId,f.floorPlanUrl
+        from (tb_my_plans a left join tb_user b on a.userId = b.userId)
+        LEFT JOIN tb_my_floorplans f on a.floorPlanId = f.floorPlanId
+        WHERE a.userId = #{oldid} AND a.planId = #{oldplanid}
+    </select>
+
+    <select id="getUserIdByName" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT userId from tb_user WHERE username=#{copyusername}
+    </select>
+
+    <insert id="insertMyfloorplan" parameterType="com.luosee.manager.user.plan.PlanList">
+        INSERT INTO tb_my_floorplans(floorPlanUrl,userId)
+        VALUES (#{floorPlanUrl},#{userId})
+    </insert>
+    
+    <select id="getfloorIdByUrl" resultType="int" parameterType="String">
+        SELECT floorPlanId FROM tb_my_floorplans WHERE floorPlanUrl=#{floorPlanUrl}
+    </select>
+
+    <insert id="insertMyplan" parameterType="com.luosee.manager.user.plan.PlanList">
+        INSERT INTO tb_my_plans(userId,title,imagePath,downloadU3DUrl,floorPlanId)
+        VALUES (#{userId},#{title},#{imagePath},#{downloadU3DUrl},#{floorPlanId})
+    </insert>
+
+</mapper>
+

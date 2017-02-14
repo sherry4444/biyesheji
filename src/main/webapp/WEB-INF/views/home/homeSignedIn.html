@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>窝立方-个人中心</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <div th:replace="fragments/resourceLink :: resourceLink"></div>
+    <link rel="stylesheet" th:href="@{/resources/css/homeSignin.css}"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div class="page-container" style="min-height: 518px;">
+    <div class="page-content">
+        <div th:replace="fragments/left :: userLeftItem">&nbsp;</div>
+        <div class="content-wrapper">
+
+            <div class="page-header page-header-default">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">欢迎加入</span> -窝立方</h4>
+                        <a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="content">
+                <div class="panel panel-white r-panel-content">
+                    <div class="panel-body" sec:authorize="hasAnyRole('ROLE_USER')" th:if="${session.userPay==null}">
+                        <div class=""></div>
+                        <form th:action="@{/authentication}" method="get" th:if="${session.Update != null}">
+                            <div class="pl-brand-certification" >
+                                <button class="brand-certification"  type="submit">订阅高级版</button>
+                            </div>
+                        </form>
+                        <form th:action="@{/authentication}" method="get">
+                            <div class="pl-brand-certification">
+                                <button class="brand-certification"  type="submit">开始品牌商认证</button>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="panel-body" sec:authorize="hasAnyRole('ROLE_USER')" th:if="${session.Update != null}">
+                        <div  th:if="${session.userPay!=null && #dates.createNow() > session.userPay.validityDate}">
+                            你的订阅功能已过期，<a th:href="@{/subscribe}">现在付费</a>
+                        </div>
+
+                        <div  th:if="${session.userPay!=null && #dates.createNow() <= session.userPay.validityDate}">
+                            你好用户的年费有效期为<span th:text="${session.userPay.payDate+'至'+session.userPay.validityDate}"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="panel-body" sec:authorize="hasAnyRole('ROLE_SELLER')" th:if="${session.Update != null}">
+                        <div  th:if="${session.userPay==null}">
+                            你好商家未付年费，可能影响你部分功能的使用，<a th:href="@{/subscribe}">现在付费</a>
+                        </div>
+
+                        <div th:if="${session.userPay!=null && #dates.createNow() > session.userPay.validityDate}">
+                            你好商家你的年费已过期<a th:href="@{/subscribe}">现在付费</a>
+                        </div>
+
+                        <div th:if="${session.userPay!=null && #dates.createNow() <= session.userPay.validityDate}">
+                            你好商家你的年费有效期为<span th:text="${session.userPay.payDate+'至'+session.userPay.validityDate}"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
+</body>
+</html>

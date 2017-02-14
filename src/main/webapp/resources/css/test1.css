@@ -1,0 +1,25 @@
+
+body {
+    padding-top: 50px;
+    padding-bottom: 40px;
+    color: #5a5a5a;
+}
+
+
+.page{
+    width: 50%;
+    margin: 0 auto;
+}
+
+.topnav{
+    width: 70%;
+    margin: 0 auto;
+}
+
+.contextbar{
+   margin-top: 50px;
+}
+
+textarea{
+   resize: vertical;
+}

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" th:href="@{/resources/css/shop/index.css}" />
+		<link rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}" />
+		<script type="text/javascript" th:src="@{/resources/js/jquery-3.1.1.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/resources/js/carousel.js}" ></script>
+	</head>
+	<body>
+		<div class="banner"></div>
+		<div class="top">
+			<div class="logo"></div>
+			
+			<div class="search">
+				<input type="text" placeholder="搜索商品"/>
+				<button type="submit"><i class="glyphicon glyphicon-search"></i></button>
+			</div>
+		</div>
+		<div class="sa-main">
+			<div class="sidebar">
+				<div class="menu-type">
+					<h4>商品分类</h4>
+				</div>
+				<div class="menu">
+					<ul>
+						<div class="glyphicon glyphicon-tree-deciduous">
+							<a>建材</a>
+						</div>
+						<li>
+							<a>地砖</a>
+						</li>
+						<li>
+							<a>油漆</a>
+						</li>
+						<li>
+							<a>踢脚线</a>
+						</li>
+						<li>
+							<a>地板</a>
+						</li>
+						<li>
+							<a>涂料</a>
+						</li>
+						<li>
+							<a>石膏线 </a>
+						</li>
+					</ul>
+				</div>
+				<div class="menu">
+					<ul>
+						<div class="glyphicon glyphicon-cog">
+							<a>灯具</a>
+						</div>
+						<li>
+							<a>主灯</a>
+						</li>
+						<li>
+							<a>射灯</a>
+						</li>
+						<li>
+							<a>落地灯</a>
+						</li>
+						<li>
+							<a>吊灯</a>
+						</li>
+					</ul>
+				</div>
+				<div class="menu">
+					<ul>
+						<div class="glyphicon glyphicon-th">
+							<a>布艺</a>
+						</div>
+						<li>
+							<a>窗帘</a>
+						</li>
+						<li>
+							<a>家具</a>
+						</li>
+					</ul>
+				</div>
+				<div class="menu">
+					<ul>
+						<div class="glyphicon glyphicon-asterisk">
+							<a>五金</a>
+						</div>
+						<li>
+							<a>窗帘滑轨</a>
+						</li>
+						<li>
+							<a>门锁</a>
+						</li>
+						<li>
+							<a>门吸</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="banner-imgs">
+				<ul id="imgItem">
+					<li class="show-banner-imgs">
+						<a href="#">
+							<img th:src="@{/resources/images/banner-1.jpg}" />
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<img th:src="@{/resources/images/p-2.jpg}"/>
+						</a>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="news">
+				<div class="new-user">
+					<div class="title-user">
+						<span>hi,游客你好</span>
+						<div class="subnav">
+							<ul>
+								<li>
+									<a th:href="@{/users/login}">登录</a>
+								</li>
+								<li>
+									<a th:href="@{/signup}">注册</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				
+				<div class="new-main">
+					<div class="new-nav">
+						<ul>
+							<li>
+								<a>公告</a>
+							</li>
+						</ul>
+					</div>
+					<div class="new-content">
+						<ul>
+							<li>
+								<a>更新公告</a>
+							</li>
+						</ul>
+						<div class="new-more">
+							<a>更多<i>>></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="sale-product">
+			<h4>打折商品</h4>		
+			<div class="products">
+				<img usemap="#planetmap" th:src="@{/resources/images/p-1.jpg}" />
+				<div class="sale"></div>
+			</div>
+			
+		</div>
+		
+		<div class="commodities">
+			
+			<div class="commoditie-region">
+				<div class="commoditie">
+					<h4>建材</h4>	
+					<div class="commoditie-banner building-material"></div>
+					<div class="commoditie-seller">
+						<ul>
+							<li>
+								<a>紫气陶瓷</a>
+							</li>
+							<li>
+								<a>紫轩地板</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="commoditie">
+					<h4>建材</h4>	
+					<div class="commoditie-banner building-material"></div>
+					<div class="commoditie-seller">
+						<ul>
+							<li>
+								<a>紫气陶瓷</a>
+							</li>
+							<li>
+								<a>紫轩地板</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			<div class="commoditie-region">
+				<div class="commoditie">
+					<h4>灯具</h4>	
+					<div class="commoditie-banner lanterns"></div>
+					<div class="commoditie-seller">
+						<ul>
+							<li>
+								<a>雷士照明</a>
+							</li>
+							<li>
+								<a>欧普</a>
+							</li>
+							<li>
+								<a>朗瑞特</a>
+							</li>
+							<li>
+								<a>朗美科</a>
+							</li>
+							<li>
+								<a>海得曼</a>
+							</li>
+							<li>
+								<a>雷士照明</a>
+							</li>
+							<li>
+								<a>欧普</a>
+							</li>
+							<li>
+								<a>朗瑞特</a>
+							</li>
+							<li>
+								<a>朗美科</a>
+							</li>
+							<li>
+								<a>海得曼</a>
+							</li>							
+							<li>
+								<a>雷士照明</a>
+							</li>
+							<li>
+								<a>欧普</a>
+							</li>
+							<li>
+								<a>朗瑞特</a>
+							</li>
+							<li>
+								<a>朗美科</a>
+							</li>
+							<li>
+								<a>海得曼</a>
+							</li>							
+						</ul>
+					</div>
+				</div>
+				<div class="commoditie">
+					<h4>灯具</h4>	
+					<div class="commoditie-banner lanterns"></div>
+					<div class="commoditie-seller">
+						<ul>
+							<li>
+								<a>雷士照明</a>
+							</li>
+							<li>
+								<a>欧普</a>
+							</li>
+							<li>
+								<a>朗瑞特</a>
+							</li>
+							<li>
+								<a>朗美科</a>
+							</li>
+							<li>
+								<a>海得曼</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="love-commodities">
+			<div class="love-title">
+				<span>猜你喜欢</span>
+			</div>
+			<div class="love-commodities-main">
+				<div class="love-commoditie">
+					<img th:src="@{/resources/images/p-1.jpg}"/>
+					<div class="commoditie-info">
+						<a href="#">青花陶瓷</a>
+						<span>¥<strong>100</strong></span>
+					</div>
+					<div class="commoditie-model">
+						<a href="#">查看商品模型</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

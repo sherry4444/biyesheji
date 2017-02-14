@@ -1,0 +1,58 @@
+.facility-body
+{
+    width: 200px;
+    min-height:528px;
+    overflow: auto;
+    border: 1px solid #dddddd;
+    float: left;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 17px;
+}
+.facility-body > ul,.facility-body > ul > li >ol
+{
+    padding: 0;
+    margin:0;
+    list-style-type: none;
+}
+.facility-body > ul
+{
+    width: 150px;
+    min-height:508px;
+    overflow: auto;
+    margin-left: 25px;
+    margin-top:10px;
+}
+.facility-body > ul > li > ol > li
+{
+    text-indent: 1cm;
+    margin: 5px;
+}
+.facility-body > ul > li
+{
+    margin-bottom: 5px;
+    border-bottom: 1px solid #dddddd;
+}
+.facility-body > ul > li > div
+{
+    cursor: pointer;
+    font-weight:bold;
+    color: #333333;
+}
+.facility-body > ul > li > div > i
+{
+    float: right;
+}
+.facility-body > ul > li > ol > li > a
+{
+    text-decoration: none;
+    color: #676767;
+}
+.facility-body > ul > li > ol > li > a:hover
+{
+    display: block;
+}
+.glyphicon
+{
+    font-weight: 100;
+    color: #01A29A;
+}
