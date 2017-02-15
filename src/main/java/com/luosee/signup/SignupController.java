@@ -1,26 +1,16 @@
 package com.luosee.signup;
 
-import com.luosee.common.HttpConnection;
-import com.luosee.common.Utils;
-import com.luosee.common.ValidatePoJo;
-import com.luosee.support.web.MessageHelper;
 import com.luosee.token.Token;
-import com.luosee.user.MobileVerify;
 import com.luosee.user.TbUser;
 import com.luosee.user.UserService;
-import com.luosee.verify.VerifyType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.Map;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 //import com.luosee.account.AccountService;
@@ -58,7 +48,7 @@ public class SignupController {
 //		return CHOICE_ROLE;
 //	}
 
-	//获取验证码
+	/*//获取验证码
 	@RequestMapping(value = "get_verify",method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
@@ -68,9 +58,9 @@ public class SignupController {
 		httpConnection.setParamKey("mobileNumber",mobileVerify.getMobile());
 		httpConnection.setParamKey("type",type);
 		return httpConnection.EstablishConnection();
-	}
+	}*/
 
-	@RequestMapping(value = "signup", method = RequestMethod.POST)
+	/*@RequestMapping(value = "signup", method = RequestMethod.POST)
 	@Token(remove = true)
 	public String signup(Model model, @ModelAttribute TbUser user, String verificationCode, BindingResult errors, RedirectAttributes ra, ValidatePoJo validatePoJo) {
 		if (validatePoJo.setValidPoJo(user,errors).hasErrors()) {
@@ -119,7 +109,7 @@ public class SignupController {
 		model.addAttribute("user",user);
 		return SIGNUP_VIEW_NAME;
 	}
-
+*/
 	/**
 	 * @param username 要注册的用户名
 	 * @author hsb

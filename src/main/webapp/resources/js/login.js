@@ -32,6 +32,7 @@ function checkCapsLock (event){
 /*global $, document, window, setTimeout, navigator, console, location*/
 /*$(document).ready(function() {*/
 ;(function ($) {
+    $(function () {
     'use strict';
 
     var usernameError = true,
@@ -108,6 +109,7 @@ function checkCapsLock (event){
 
     // form switch
     $('a.switch').click(function(e) {
+        console.log("223333333");
         $(this).toggleClass('active');
         e.preventDefault();
 
@@ -154,5 +156,6 @@ function checkCapsLock (event){
         location.reload(true);
     });
 
+    });
 
-});
+})(jQuery);
