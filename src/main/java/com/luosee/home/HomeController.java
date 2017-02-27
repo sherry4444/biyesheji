@@ -1,11 +1,8 @@
 package com.luosee.home;
 
-import com.luosee.business.BusinessService;
 import com.luosee.common.SaltedUser;
-import com.luosee.pay.PayDao;
-import com.luosee.pay.Subscribe;
-import com.luosee.user.QueryUserRole;
-import com.luosee.user.UserService;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,38 +22,39 @@ import java.util.List;
 @Controller
 public class HomeController {
 
-	@Autowired
-	private BusinessService businessService;
+//	@Autowired
+//	private BusinessService businessService;
 
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
 
-	@Resource(name = "payDao")
-	private PayDao payDao;
+//	@Resource(name = "payDao")
+//	private PayDao payDao;
 
 	final Logger logger= LoggerFactory.getLogger(HomeController.class);
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String index(Model model, HttpServletRequest request, HttpSession session, Principal principal) {
-		//判断是否登录了
-		if (principal == null)
-		{
-			return "signin/login";
-		}
-
-		SaltedUser user=(SaltedUser) SecurityContextHolder.getContext()
-				.getAuthentication()
-				.getPrincipal();
-		//BusinessSubUser businessSubUser=businessService.findOneBusinessSub(securityContextImpl.getAuthentication().getName());
-
-		List<Subscribe> userPay = null;
-		if(!"3".equals(user.getGrade()))
-		{
-			userPay=payDao.userPackage(user.getUsername());
-		}
-        session.setAttribute("userPay",userPay);
-		return AcountLogin.loginType(QueryUserRole.findUserRole(request));
-	}
+//	@RequestMapping(value = "/", method = RequestMethod.GET)
+//	public String index(Model model, HttpServletRequest request, HttpSession session, Principal principal) {
+//		//判断是否登录了
+//		if (principal == null)
+//		{
+//			return "signin/login";
+//		}
+//
+//		SaltedUser user=(SaltedUser) SecurityContextHolder.getContext()
+//				.getAuthentication()
+//				.getPrincipal();
+//		//BusinessSubUser businessSubUser=businessService.findOneBusinessSub(securityContextImpl.getAuthentication().getName());
+//
+////		List<Subscribe> userPay = null;
+////		if(!"3".equals(user.getGrade()))
+////		{
+////			userPay=payDao.userPackage(user.getUsername());
+////		}
+////        session.setAttribute("userPay",userPay);
+//		return "";
+////		return AcountLogin.loginType(QueryUserRole.findUserRole(request));
+//	}
 
 	@RequestMapping("tobusiness")
 	@Secured("ROLE_ADMIN")

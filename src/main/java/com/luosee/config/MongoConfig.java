@@ -24,7 +24,7 @@ class MongoConfig {
 
     @Bean
     public MongoDbFactory mongoDbFactory() throws UnknownHostException {
-        return new SimpleMongoDbFactory(new Mongo(), "daedaluse-business");
+        return new SimpleMongoDbFactory(new Mongo(), "test");
     }
 
     @Bean
